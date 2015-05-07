@@ -13,7 +13,7 @@ from tppVisu.util import Stats, Environment
 from tppVisu.calculator import Eff, calcMove, Kind
 
 
-class TppVisuTests(unittest.TestCase):
+class TppVisuAbilityTests(unittest.TestCase):
     
     def genStats(self, HP=100, ATK=100, DEF=100, SPA=100, SPD=100, SPE=100):
         return Stats(HP, ATK, DEF, SPA, SPD, SPE)
@@ -74,253 +74,253 @@ class TppVisuTests(unittest.TestCase):
         p.ATK.stageAdd(5)
         self.assertEqual(p.ATK.get(), 400)
 
-    def test_ability_Adaptability(self):
+    def_test_ability_adaptability(self):
         pass
-    def test_ability_Aftermath(self):
+    def_test_ability_aftermath(self):
         pass
-    def test_ability_Air Lock(self):
+    def_test_ability_air_lock(self):
         pass
-    def test_ability_Anger Point(self):
+    def_test_ability_anger_point(self):
         pass
-    def test_ability_Anticipation(self):
+    def_test_ability_anticipation(self):
         pass
-    def test_ability_Arena Trap(self):
+    def_test_ability_arena_trap(self):
         pass
-    def test_ability_Bad Dreams(self):
+    def_test_ability_bad_dreams(self):
         pass
-    def test_ability_Battle Armor(self):
+    def_test_ability_battle_armor(self):
         pass
-    def test_ability_Blaze(self):
+    def_test_ability_blaze(self):
         pass
-    def test_ability_Cacophony(self):
+    def_test_ability_cacophony(self):
         pass
-    def test_ability_Chlorophyll(self):
+    def_test_ability_chlorophyll(self):
         pass
-    def test_ability_Clear Body(self):
+    def_test_ability_clear_body(self):
         pass
-    def test_ability_Cloud Nine(self):
+    def_test_ability_cloud_nine(self):
         pass
-    def test_ability_Color Change(self):
+    def_test_ability_color_change(self):
         pass
-    def test_ability_Compound Eyes(self):
+    def_test_ability_compound_eyes(self):
         pass
-    def test_ability_Cute Charm(self):
+    def_test_ability_cute_charm(self):
         pass
-    def test_ability_Damp(self):
+    def_test_ability_damp(self):
         pass
-    def test_ability_Download(self):
+    def_test_ability_download(self):
         pass
-    def test_ability_Drizzle(self):
+    def_test_ability_drizzle(self):
         pass
-    def test_ability_Drought(self):
+    def_test_ability_drought(self):
         pass
-    def test_ability_Dry Skin(self):
+    def_test_ability_dry_skin(self):
         pass
-    def test_ability_Early Bird(self):
+    def_test_ability_early_bird(self):
         pass
-    def test_ability_Effect Spore(self):
+    def_test_ability_effect_spore(self):
         pass
-    def test_ability_Filter(self):
+    def_test_ability_filter(self):
         pass
-    def test_ability_Flame Body(self):
+    def_test_ability_flame_body(self):
         pass
-    def test_ability_Flash Fire(self):
+    def_test_ability_flash_fire(self):
         pass
-    def test_ability_Flower Gift(self):
+    def_test_ability_flower_gift(self):
         pass
-    def test_ability_Forecast(self):
+    def_test_ability_forecast(self):
         pass
-    def test_ability_Forewarn(self):
+    def_test_ability_forewarn(self):
         pass
-    def test_ability_Frisk(self):
+    def_test_ability_frisk(self):
         pass
-    def test_ability_Gluttony(self):
+    def_test_ability_gluttony(self):
         pass
-    def test_ability_Guts(self):
+    def_test_ability_guts(self):
         pass
-    def test_ability_Heatproof(self):
+    def_test_ability_heatproof(self):
         pass
-    def test_ability_Honey Gather(self):
+    def_test_ability_honey_gather(self):
         pass
-    def test_ability_Huge Power(self):
+    def_test_ability_huge_power(self):
         pass
-    def test_ability_Hustle(self):
+    def_test_ability_hustle(self):
         pass
-    def test_ability_Hydration(self):
+    def_test_ability_hydration(self):
         pass
-    def test_ability_Hyper Cutter(self):
+    def_test_ability_hyper_cutter(self):
         pass
-    def test_ability_Ice Body(self):
+    def_test_ability_ice_body(self):
         pass
-    def test_ability_Illuminate(self):
+    def_test_ability_illuminate(self):
         pass
-    def test_ability_Immunity(self):
+    def_test_ability_immunity(self):
         pass
-    def test_ability_Inner Focus(self):
+    def_test_ability_inner_focus(self):
         pass
-    def test_ability_Insomnia(self):
+    def_test_ability_insomnia(self):
         pass
-    def test_ability_Intimidate(self):
+    def_test_ability_intimidate(self):
         pass
-    def test_ability_Iron Fist(self):
+    def_test_ability_iron_fist(self):
         pass
-    def test_ability_Keen Eye(self):
+    def_test_ability_keen_eye(self):
         pass
-    def test_ability_Klutz(self):
+    def_test_ability_klutz(self):
         pass
-    def test_ability_Leaf Guard(self):
+    def_test_ability_leaf_guard(self):
         pass
-    def test_ability_Levitate(self):
+    def_test_ability_levitate(self):
         pass
-    def test_ability_Lightning Rod(self):
+    def_test_ability_lightning_rod(self):
         pass
-    def test_ability_Limber(self):
+    def_test_ability_limber(self):
         pass
-    def test_ability_Liquid Ooze(self):
+    def_test_ability_liquid_ooze(self):
         pass
-    def test_ability_Magic Guard(self):
+    def_test_ability_magic_guard(self):
         pass
-    def test_ability_Magma Armor(self):
+    def_test_ability_magma_armor(self):
         pass
-    def test_ability_Magnet Pull(self):
+    def_test_ability_magnet_pull(self):
         pass
-    def test_ability_Marvel Scale(self):
+    def_test_ability_marvel_scale(self):
         pass
-    def test_ability_Minus(self):
+    def_test_ability_minus(self):
         pass
-    def test_ability_Mold Breaker(self):
+    def_test_ability_mold_breaker(self):
         pass
-    def test_ability_Motor Drive(self):
+    def_test_ability_motor_drive(self):
         pass
-    def test_ability_Multitype(self):
+    def_test_ability_multitype(self):
         pass
-    def test_ability_Natural Cure(self):
+    def_test_ability_natural_cure(self):
         pass
-    def test_ability_No Guard(self):
+    def_test_ability_no_guard(self):
         pass
-    def test_ability_Normalize(self):
+    def_test_ability_normalize(self):
         pass
-    def test_ability_Oblivious(self):
+    def_test_ability_oblivious(self):
         pass
-    def test_ability_Overgrow(self):
+    def_test_ability_overgrow(self):
         pass
-    def test_ability_Own Tempo(self):
+    def_test_ability_own_tempo(self):
         pass
-    def test_ability_Pickup(self):
+    def_test_ability_pickup(self):
         pass
-    def test_ability_Plus(self):
+    def_test_ability_plus(self):
         pass
-    def test_ability_Poison Heal(self):
+    def_test_ability_poison_heal(self):
         pass
-    def test_ability_Poison Point(self):
+    def_test_ability_poison_point(self):
         pass
-    def test_ability_Pressure(self):
+    def_test_ability_pressure(self):
         pass
-    def test_ability_Pure Power(self):
+    def_test_ability_pure_power(self):
         pass
-    def test_ability_Quick Feet(self):
+    def_test_ability_quick_feet(self):
         pass
-    def test_ability_Rain Dish(self):
+    def_test_ability_rain_dish(self):
         pass
-    def test_ability_Reckless(self):
+    def_test_ability_reckless(self):
         pass
-    def test_ability_Rivalry(self):
+    def_test_ability_rivalry(self):
         pass
-    def test_ability_Rock Head(self):
+    def_test_ability_rock_head(self):
         pass
-    def test_ability_Rough Skin(self):
+    def_test_ability_rough_skin(self):
         pass
-    def test_ability_Run Away(self):
+    def_test_ability_run_away(self):
         pass
-    def test_ability_Sand Stream(self):
+    def_test_ability_sand_stream(self):
         pass
-    def test_ability_Sand Veil(self):
+    def_test_ability_sand_veil(self):
         pass
-    def test_ability_Scrappy(self):
+    def_test_ability_scrappy(self):
         pass
-    def test_ability_Serene Grace(self):
+    def_test_ability_serene_grace(self):
         pass
-    def test_ability_Shadow Tag(self):
+    def_test_ability_shadow_tag(self):
         pass
-    def test_ability_Shed Skin(self):
+    def_test_ability_shed_skin(self):
         pass
-    def test_ability_Shell Armor(self):
+    def_test_ability_shell_armor(self):
         pass
-    def test_ability_Shield Dust(self):
+    def_test_ability_shield_dust(self):
         pass
-    def test_ability_Simple(self):
+    def_test_ability_simple(self):
         pass
-    def test_ability_Skill Link(self):
+    def_test_ability_skill_link(self):
         pass
-    def test_ability_Slow Start(self):
+    def_test_ability_slow_start(self):
         pass
-    def test_ability_Sniper(self):
+    def_test_ability_sniper(self):
         pass
-    def test_ability_Snow Cloak(self):
+    def_test_ability_snow_cloak(self):
         pass
-    def test_ability_Snow Warning(self):
+    def_test_ability_snow_warning(self):
         pass
-    def test_ability_Solar Power(self):
+    def_test_ability_solar_power(self):
         pass
-    def test_ability_Solid Rock(self):
+    def_test_ability_solid_rock(self):
         pass
-    def test_ability_Soundproof(self):
+    def_test_ability_soundproof(self):
         pass
-    def test_ability_Speed Boost(self):
+    def_test_ability_speed_boost(self):
         pass
-    def test_ability_Stall(self):
+    def_test_ability_stall(self):
         pass
-    def test_ability_Static(self):
+    def_test_ability_static(self):
         pass
-    def test_ability_Steadfast(self):
+    def_test_ability_steadfast(self):
         pass
-    def test_ability_Stench(self):
+    def_test_ability_stench(self):
         pass
-    def test_ability_Sticky Hold(self):
+    def_test_ability_sticky_hold(self):
         pass
-    def test_ability_Storm Drain(self):
+    def_test_ability_storm_drain(self):
         pass
-    def test_ability_Sturdy(self):
+    def_test_ability_sturdy(self):
         pass
-    def test_ability_Suction Cups(self):
+    def_test_ability_suction_cups(self):
         pass
-    def test_ability_Super Luck(self):
+    def_test_ability_super_luck(self):
         pass
-    def test_ability_Swarm(self):
+    def_test_ability_swarm(self):
         pass
-    def test_ability_Swift Swim(self):
+    def_test_ability_swift_swim(self):
         pass
-    def test_ability_Synchronize(self):
+    def_test_ability_synchronize(self):
         pass
-    def test_ability_Tangled Feet(self):
+    def_test_ability_tangled_feet(self):
         pass
-    def test_ability_Technician(self):
+    def_test_ability_technician(self):
         pass
-    def test_ability_Thick Fat(self):
+    def_test_ability_thick_fat(self):
         pass
-    def test_ability_Tinted Lens(self):
+    def_test_ability_tinted_lens(self):
         pass
-    def test_ability_Torrent(self):
+    def_test_ability_torrent(self):
         pass
-    def test_ability_Trace(self):
+    def_test_ability_trace(self):
         pass
-    def test_ability_Truant(self):
+    def_test_ability_truant(self):
         pass
-    def test_ability_Unaware(self):
+    def_test_ability_unaware(self):
         pass
-    def test_ability_Unburden(self):
+    def_test_ability_unburden(self):
         pass
-    def test_ability_Vital Spirit(self):
+    def_test_ability_vital_spirit(self):
         pass
-    def test_ability_Volt Absorb(self):
+    def_test_ability_volt_absorb(self):
         pass
-    def test_ability_Water Absorb(self):
+    def_test_ability_water_absorb(self):
         pass
-    def test_ability_Water Veil(self):
+    def_test_ability_water_veil(self):
         pass
-    def test_ability_White Smoke(self):
+    def_test_ability_white_smoke(self):
         pass
-    def test_ability_Wonder Guard(self):
+    def_test_ability_wonder_guard(self):
         pass
 
 if __name__ == '__main__':
