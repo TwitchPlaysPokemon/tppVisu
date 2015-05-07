@@ -3,20 +3,36 @@ Created on 02.05.2015
 
 @author: Felk
 '''
-from tppVisu.tables import moveFuncs
+from collections import namedtuple
+from enum import Enum
+
 from tppVisu.move import MoveCategory
+from tppVisu.tables import moveFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
-from collections import namedtuple
+from copy import deepcopy
 
-Result = namedtuple('Result', 'eff accuracy damage')
+
+class Kind(Enum):
+    normal      = 'normal'
+    status      = 'status'
+    ohko        = 'ohko'
+    notVisuable = 'notVisuable'
+
+MoveResult = namedtuple('MoveResult', 'kind eff accuracy damage')
 
 def calcMove(move, pkmn, opp, env):
+    
+    # work on local copies!
+    move = deepcopy(move)
+    pkmn = deepcopy(pkmn)
+    opp  = deepcopy(opp)
+    env  = deepcopy(env)
     
     ovwr = moveFuncs.call(move, pkmn, opp, env)
     
     if not move.visuable:
-        pass # TODO return result
+        return MoveResult(Kind.notVisuable, Eff.NORMAL, move.accuracy, (0, 0))
     
     # calculate final accuracy
     accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
@@ -26,10 +42,8 @@ def calcMove(move, pkmn, opp, env):
         if accu > 100: accu = 100
         if accu < 30: move.disable()
         
-    # TODO re-implement OHKO moves into new API somehow
-    
     if move.isDisabled():
-        pass # TODO return result
+        return MoveResult(Kind.normal, Eff.NOT, accu, (0, 0))
     
     ##########################################################
     
@@ -40,7 +54,7 @@ def calcMove(move, pkmn, opp, env):
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
         # TODO implement damage values for special attacks as well (Future sight e.g.)
-        pass # TODO return result
+        return MoveResult(Kind.status, Eff.NORMAL, accu, (0, 0))
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()
     else:
@@ -51,9 +65,9 @@ def calcMove(move, pkmn, opp, env):
     if pkmn.type2 == move.type: modifierStab *= pkmn.stab
     
     modifierType = getEff(move.type, opp.type1)
-    if opp.type2 > 0: modifierType *= getEff(move.type, opp.type2)
+    if opp.type2: modifierType *= getEff(move.type, opp.type2)
     
-    modifierPost = pkmn.typeMults[move.type]
+    modifierPost = getattr(pkmn.typeMults, move.type)
     
     if modifierType == 0 or modifierPost == 0:
         eff = Eff.NOT
@@ -68,10 +82,13 @@ def calcMove(move, pkmn, opp, env):
         eff = Eff.NORMAL
         modifierType *= pkmn.effs.NORMAL
     
+    if move.isOHKOMove():
+        return MoveResult(Kind.ohko, eff, accu, (0, 0))
+    
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
-    calc = lambda P : (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * modifierStab * modifierType * modifierPost
-    predamage = tuple(calc(P) for P in power)
+    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * modifierStab * modifierType * modifierPost
+    predamage = tuple(calcSetup(P) for P in power)
     
     # BRN attack nerf
     if pkmn.status == 'brn' and move.category == MoveCategory.physical:
@@ -80,5 +97,4 @@ def calcMove(move, pkmn, opp, env):
     damage = ovwr.damage if ovwr.damage != None else (predamage[0] * 0.85, predamage[1])
     damage = tuple(max(0, D) for D in damage)
 
-    return Result(eff, accu, damage)
-    # TODO return result
+    return MoveResult(Kind.normal, eff, accu, damage)

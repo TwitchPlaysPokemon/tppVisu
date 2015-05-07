@@ -7,8 +7,8 @@ from tppVisu.pokemon import Gender
 
 class MoveOverwrites(object):
     def __init__(self):
-        self.damage = (None, None)
-        self.power = (None, None)
+        self.damage = None
+        self.power = None
         self.notice = None
 
 def call(move, pkmn, opp, env):
@@ -54,10 +54,6 @@ def m_facade        (move, pkmn, opp, env, ovwr):
     if pkmn.hasStatusCondition():
         move.power *= 2
     
-def m_fissure       (move, pkmn, opp, env, ovwr):
-    # TODO handle differently
-    move.category = 4
-    
 def m_frustration   (move, pkmn, opp, env, ovwr):
     move.power = (255 - pkmn.happiness) / 2.5
     if move.power == 0:
@@ -79,16 +75,8 @@ def m_grass_knot    (move, pkmn, opp, env, ovwr):
     else:
         move.power = 120
         
-def m_guillotine    (move, pkmn, opp, env, ovwr):
-    # TODO handle differently
-    move.category = 4
-    
 def m_gyro_ball     (move, pkmn, opp, env, ovwr):
     move.power = 25 * (opp.SPE.get() / pkmn.SPE.get())
-    
-def m_horn_drill    (move, pkmn, opp, env, ovwr):
-    # TODO handle differently
-    move.category = 4
     
 def m_low_kick      (move, pkmn, opp, env, ovwr):
     if opp.weight < 0.1:

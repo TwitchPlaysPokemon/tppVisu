@@ -14,7 +14,7 @@ class Stat(object):
         self.stage = stage
         self.multiplier = 1
         self.increment = 1 # for abilities 'Contrary', 'Simple' and 'Unaware'
-        self.multTable = [1/4, 2/7, 1/3, 2/5, 1/2, 2/3, 1, 3/2, 2, 5/2, 3, 7/2, 4]
+        self.multTable = [2/8, 2/7, 2/6, 2/5, 2/4, 2/3, 2/2, 3/2, 4/2, 5/2, 6/2, 7/2, 8/2]
         
     def setStage(self, stage):
         self.stage = min(6, max(-6, stage))
@@ -33,5 +33,8 @@ class Stat(object):
 class StatAccEva(Stat):
     def __init__(self, stage=0):
         super().__init__(1, stage)
-        self.multTable = [1/3, 3/8, 3/7, 1/2, 3/5, 3/4, 1, 4/3, 5/3, 2, 7/3, 8/3, 3]
-        
+        self.multTable = [33/100, 36/100, 43/100, 50/100, 60/100, 75/100, 100/100, 133/100, 166/100, 200/100, 250/100, 266/100, 300/100]
+    
+    def get(self):
+        # overwritten, because accuracy modifiers must not be cast to an integer
+        return self.base * self.multTable[self.stage + 6] * self.multiplier

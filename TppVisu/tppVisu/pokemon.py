@@ -21,6 +21,7 @@ class Pokemon(object):
         self.type2   = type2
         self.gender  = gender
         self.ability = ability
+        self.moves   = moves
         
         self.HP  = stats.HP
         self.ATK = Stat(stats.ATK, stages.ATK)

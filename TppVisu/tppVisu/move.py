@@ -26,7 +26,7 @@ class Move(object):
         self.accuracy    = accuracy
         self.priority    = getPriority(self)
         self.visuable    = isVisuable(self)
-        self.minHits, self.maxHits = getMinMaxHits(self)
+        self.minMaxHits  = getMinMaxHits(self)
        
     def disable(self):
         self.power = -1
