@@ -45,11 +45,11 @@ def a_compound_eyes (pkmn, opp, env):
     
 def a_damp          (pkmn, opp, env):
     for move in pkmn.moves:
-        if move.isSelfdestructingMove():
+        if move.anomaly == MoveAnomaly.selfdestructing:
             move.disable()
     if not opp.breaksMold():
         for move in opp.moves:
-            if move.isSelfdestructingMove():
+            if move.anomaly == MoveAnomaly.selfdestructing:
                 move.disable()
 
 def a_download      (pkmn, opp, env):
