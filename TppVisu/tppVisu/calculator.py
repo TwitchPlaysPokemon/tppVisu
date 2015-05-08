@@ -6,7 +6,7 @@ Created on 02.05.2015
 from enum import Enum
 
 from tppVisu.move import MoveCategory
-from tppVisu.tables import moveFuncs
+from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
 from copy import deepcopy
@@ -19,7 +19,7 @@ class Kind(Enum):
     notVisuable = 'notVisuable'
 
 class MoveResult(object):
-    def __init__(self, pkmn, opp, env, accuracy, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
+    def __init__(self, pkmn, opp, env, abilityNotice, moveNotice, accuracy, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
         self.pkmn = pkmn
         self.opp = opp
         self.env = env
@@ -35,11 +35,14 @@ def calcMove(move, pkmn, opp, env):
     pkmn = deepcopy(pkmn)
     opp  = deepcopy(opp)
     env  = deepcopy(env)
-    
+     
+    # applying abilities here is redundant, but is eases he program structure.
+    abilityNotice = abilityFuncs.call(pkmn.ability, pkmn, opp, env)
     ovwr = moveFuncs.call(move, pkmn, opp, env)
+    moveNotice = ovwr.notice
     
     if not move.visuable:
-        return MoveResult(pkmn, opp, env, move.accuracy, kind=Kind.notVisuable)
+        return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, move.accuracy, kind=Kind.notVisuable)
     
     # calculate final accuracy
     accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
@@ -50,7 +53,7 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        return MoveResult(pkmn, opp, env, accu, eff=Eff.NOT)
+        return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, accu, eff=Eff.NOT)
     
     ##########################################################
     
@@ -90,7 +93,7 @@ def calcMove(move, pkmn, opp, env):
         modifierType *= pkmn.effs.NORMAL
     
     if move.isOHKOMove():
-        return MoveResult(pkmn, opp, env, accu, kind=Kind.ohko, eff=eff)
+        return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.ohko, eff=eff)
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
@@ -104,4 +107,4 @@ def calcMove(move, pkmn, opp, env):
     damage = ovwr.damage if ovwr.damage != None else (predamage[0] * 0.85, predamage[1])
     damage = tuple(max(0, D) for D in damage)
 
-    return MoveResult(pkmn, opp, env, accu, eff=eff, damage=damage)
+    return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, accu, eff=eff, damage=damage)
