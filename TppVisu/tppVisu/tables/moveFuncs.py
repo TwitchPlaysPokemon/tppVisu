@@ -147,6 +147,11 @@ def m_thunder       (move, pkmn, opp, env, ovwr):
     if env.weather == 'rain':
         move.accuracy = 100
         
+def m_triple_kick   (move, pkmn, opp, env, ovwr):
+    # hack for: 3 hits with 10, 20, 30 base power.
+    # 10 minimum, or avg. 20 for maximum
+    ovwr.power = (10, 20)
+        
 def m_trump_card    (move, pkmn, opp, env, ovwr):
     # TODO power increases as PP decreases
     ovwr.power = (40, 200)
