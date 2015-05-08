@@ -23,7 +23,7 @@ class MoveResult(object):
         self.pkmn = pkmn
         self.opp = opp
         self.env = env
-        self.accuracy = accuracy
+        self.accuracy = int(accuracy)
         self.kind = kind
         self.eff  = eff
         self.damage = damage
@@ -45,7 +45,10 @@ def calcMove(move, pkmn, opp, env):
         return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, move.accuracy, kind=Kind.notVisuable)
     
     # calculate final accuracy
-    accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
+    accu = None
+    if move.accuracy != None and move.accuracy >= 0: accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
+    # "no accuracy" modifier might be saved as -1
+    
     # accuracy is a fixed value for OHKO moves
     if move.isOHKOMove():
         accu = 30 + (pkmn.level - opp.level)
@@ -64,7 +67,7 @@ def calcMove(move, pkmn, opp, env):
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
         # TODO implement damage values for special attacks as well (Future sight e.g.)
-        return MoveResult(pkmn, opp, env, accu, kind=Kind.status)
+        return MoveResult(pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.status)
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()
     else:

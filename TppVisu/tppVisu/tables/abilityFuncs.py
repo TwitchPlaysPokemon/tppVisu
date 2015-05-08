@@ -140,7 +140,7 @@ def a_levitate      (pkmn, opp, env):
 
 def a_lightning_rod (pkmn, opp, env):
     for move in opp.moves:
-        if move.type == 'electric': move.accuracy = -1
+        if move.type == 'electric': move.accuracy = None
 
 def a_limber        (pkmn, opp, env):
     if pkmn.status == 'par':
@@ -158,9 +158,9 @@ def a_marvel_scale  (pkmn, opp, env):
 
 def a_no_guard      (pkmn, opp, env):
     for move in pkmn.moves:
-        move.accuracy = -1
+        move.accuracy = None
     for move in opp.moves:
-        move.accuracy = -1
+        move.accuracy = None
 
 def a_normalize     (pkmn, opp, env):
     for move in pkmn.moves:
@@ -243,7 +243,7 @@ def a_stall         (pkmn, opp, env):
 def a_storm_drain   (pkmn, opp, env):
     for move in opp.moves:
         if move.type == 'water':
-            move.accuracy = -1
+            move.accuracy = None
 
 def a_sturdy        (pkmn, opp, env):
     if not opp.breaksMold():
