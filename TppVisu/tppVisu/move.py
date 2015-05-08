@@ -8,6 +8,7 @@ from enum import Enum
 from tppVisu.tables.moveHits import getMinMaxHits
 from tppVisu.tables.movePriorities import getPriority
 from tppVisu.tables.moveVisuables import isVisuable
+from tppVisu.tables.moveAnomalies import getAnomaly
 
 
 class MoveCategory(Enum):
@@ -27,6 +28,7 @@ class Move(object):
         self.priority    = getPriority(self)
         self.visuable    = isVisuable(self)
         self.minMaxHits  = getMinMaxHits(self)
+        self.anomaly     = getAnomaly(self)
        
     def disable(self):
         self.power = -1
@@ -34,10 +36,6 @@ class Move(object):
     def isDisabled(self):
         return self.power < 0
      
-    def isSelfdestructingMove(self):
-        return self.name in ['Explosion',
-                             'Self-Destruct']
-
     def isPunchingMove(self):
         return self.name in ['Bullet Punch',
                              'Comet Punch',
@@ -55,23 +53,6 @@ class Move(object):
                              'Shadow Punch',
                              'Sky Uppercut',
                              'Thunder Punch']
-    
-    def isRecoilMove(self):  # also crash damage moves
-        return self.name in ['Take Down',
-                             'Double-Edge',
-                             'Submission',
-                             'Volt Tackle',
-                             'Flare Blitz',
-                             'Brave Bird',
-                             'Wood Hammer',
-                             'Head Smash',
-                             'Wild Charge',
-                             'Head Charge',
-                             'Shadow Rush',
-                             'Shadow End',
-                             'Jump Kick',
-                             'High Jump Kick',
-                             'Hi Jump Kick']
     
     def isSoundMove(self):
         return self.name in ['Boomburst',

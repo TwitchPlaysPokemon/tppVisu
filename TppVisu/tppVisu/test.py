@@ -325,6 +325,8 @@ class TppVisuTests(unittest.TestCase):
         m = self.genMove(name='Thunder', accuracy=70)
         self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv()).accuracy, 70)
         self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv(weather='rain')).accuracy, 100)
+        self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv(weather='sun')).accuracy, 50)
+        self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv(weather='sandstorm')).accuracy, 70)
         
     def test_move_triple_kick(self):
         # 3 hits with 10, 20, 30 base power

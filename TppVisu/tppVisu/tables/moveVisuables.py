@@ -12,6 +12,10 @@ tableNotVisuables = ['Bide',
                      'Mirror Coat',
                      'Nature Power',
                      'Super Fang',
+                     'Sleep Talk',
+                     'Me First',
+                     'Beat Up',
+                     'Metal Burst'
                     ]
 
 def isVisuable(move):

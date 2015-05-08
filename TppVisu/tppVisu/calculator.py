@@ -67,7 +67,6 @@ def calcMove(move, pkmn, opp, env):
         
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
-        # TODO implement damage values for special attacks as well (Future sight e.g.)
         return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.status)
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()

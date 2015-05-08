@@ -5,6 +5,7 @@ Created on 28.04.2015
 '''
 from tppVisu.move import MoveCategory
 from tppVisu.pokemon import Gender
+from tppVisu.tables.moveAnomalies import MoveAnomaly
 
 def call(abilityName, pkmn, opp, env):
     funcname = 'a_' + abilityName.lower().replace(' ', '_')
@@ -176,7 +177,7 @@ def a_quick_feet    (pkmn, opp, env):
 
 def a_reckless      (pkmn, opp, env):
     for move in pkmn.moves:
-        if move.isRecoilMove():
+        if move.anomaly == MoveAnomaly.recoiling:
             move.power *= 1.2
 
 def a_rivalry       (pkmn, opp, env):
