@@ -11,7 +11,7 @@ from tppVisu.pokemon import Pokemon, Gender
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Stats, Environment
 from tppVisu.calculator import Eff, calcMove, Kind
-from tppVisu.api import assembleSetup
+from tppVisu.api import buildJsonSetup
 import json
 
 class TppVisuTests(unittest.TestCase):
@@ -360,7 +360,7 @@ class TppVisuTests(unittest.TestCase):
     
     def test_json1(self):
         p1 = self.genPkmn(moves=[self.genMove(category=MoveCategory.nonDamaging), self.genMove(category=MoveCategory.special)])
-        dic = assembleSetup(p1, self.genPkmn(), self.genEnv())
+        dic = buildJsonSetup(p1, self.genPkmn(), self.genEnv())
         self.assertEqual(json.dumps(dic, sort_keys=True), '{"blue": [{"accuracy": 100, "damage": null, "eff": "normal", "kind": "status"}, {"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}], "red": [{"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}]}')
     
 
