@@ -11,6 +11,7 @@ from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
 from copy import deepcopy
 from tppVisu.move import Move
+from collections import namedtuple
 
 
 class Kind(Enum):
@@ -27,6 +28,8 @@ class MoveResult(object):
         self.kind = kind
         self.eff  = eff
         self.damage = damage
+        
+SetupResult = namedtuple('Setupresult', 'blues reds env')
 
 def calcSetup(blue, red, env):
     # work on local copies
@@ -40,7 +43,7 @@ def calcSetup(blue, red, env):
     blues = [calcMove(move, blue, red, env) for move in blue.moves]
     reds  = [calcMove(move, red, blue, env) for move in red.moves]
     
-    return (blues, reds, env)
+    return SetupResult(blues, reds, env)
     
 
 def calcMove(move, pkmn, opp, env):

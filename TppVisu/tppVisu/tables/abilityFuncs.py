@@ -4,8 +4,8 @@ Created on 28.04.2015
 @author: Felk
 '''
 from tppVisu.move import MoveCategory
-from tppVisu.pokemon import Gender
 from tppVisu.tables.moveAnomalies import MoveAnomaly
+import tppVisu.pokemon
 
 def call(abilityName, pkmn, opp, env):
     funcname = 'a_' + abilityName.lower().replace(' ', '_')
@@ -187,7 +187,7 @@ def a_reckless      (pkmn, opp, env):
             move.power *= 1.2
 
 def a_rivalry       (pkmn, opp, env):
-    if pkmn.gender == Gender.none or opp.gender == Gender.none:
+    if pkmn.gender == tppVisu.pokemon.Gender.none or opp.gender == tppVisu.pokemon.Gender.none:
         mult = 1
     elif pkmn.gender == opp.gender:
         mult = 1.25
