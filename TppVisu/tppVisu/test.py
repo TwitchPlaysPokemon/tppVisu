@@ -11,7 +11,8 @@ from tppVisu.pokemon import Pokemon, Gender
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Stats, Environment
 from tppVisu.calculator import Eff, calcMove, Kind
-
+from tppVisu.api import buildDictSetup
+import json
 
 class TppVisuTests(unittest.TestCase):
     
@@ -166,6 +167,15 @@ class TppVisuTests(unittest.TestCase):
         self.assertEqual(getEff('ghost', 'normal'), 0)
         self.assertEqual(getEff('water', 'flying'), 1)
         
+    def test_move_arm_thrust(self):
+        m = self.genMove(name='Arm Thrust', power=15)
+        p1 = self.genPkmn(stats=self.genStats(ATK=332), type1="dragon") # no stab
+        p2 = self.genPkmn(stats=self.genStats(DEF=223))
+        dmg1 = self.getDamage(15, 332, 223)[0] * 2
+        dmg2 = self.getDamage(15, 332, 223)[1] * 5
+        self.assertEqual(calcMove(m, p1, p2, self.genEnv()).damage, (dmg1, dmg2))
+        
+        
     def test_move_attract(self):
         m = self.genMove(name='Attract')
         p1 = self.genPkmn(gender=Gender.male)
@@ -204,7 +214,7 @@ class TppVisuTests(unittest.TestCase):
         self.assertEqual(calcMove(self.genMove(name='Guillotine'), self.genPkmn(), self.genPkmn(), self.genEnv()).kind, Kind.ohko)
         self.assertEqual(calcMove(self.genMove(name='Sheer Cold'), self.genPkmn(), self.genPkmn(), self.genEnv()).kind, Kind.ohko)
         self.assertEqual(calcMove(self.genMove(name='Horn Drill'), self.genPkmn(), self.genPkmn(), self.genEnv()).kind, Kind.ohko)
-        self.assertNotEquals(calcMove(self.genMove(name='Seismic Toss'), self.genPkmn(), self.genPkmn(), self.genEnv()).kind, Kind.ohko)
+        self.assertNotEqual(calcMove(self.genMove(name='Seismic Toss'), self.genPkmn(), self.genPkmn(), self.genEnv()).kind, Kind.ohko)
 
     def test_move_frustration(self):
         p1 = self.genPkmn(stats=self.genStats(ATK=79), type1='water')
@@ -316,8 +326,42 @@ class TppVisuTests(unittest.TestCase):
         self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv()).accuracy, 70)
         self.assertEqual(calcMove(m, self.genPkmn(), self.genPkmn(), self.genEnv(weather='rain')).accuracy, 100)
         
+    def test_move_triple_kick(self):
+        # 3 hits with 10, 20, 30 base power
+        m = self.genMove(name="Triple Kick", power=10, type='fighting')
+        p1 = self.genPkmn(stats=self.genStats(ATK=190))
+        p2 = self.genPkmn(stats=self.genStats(DEF=173), type1='normal')
+        dmg1 = self.getDamage(10, 190, 173, 2)[0]
+        dmg2 = self.getDamage(10, 190, 173, 2)[1] + self.getDamage(20, 190, 173, 2)[1] + self.getDamage(30, 190, 173, 2)[1]
+        self.assertEqual(calcMove(m, p1, p2, self.genEnv()).damage, (dmg1, dmg2))
+        
     def test_move_weather_ball(self):
-        pass # continue later...
+        p1 = self.genPkmn(stats=self.genStats(ATK=70))
+        p2 = self.genPkmn(stats=self.genStats(DEF=80))
+        m = self.genMove(name='Weather Ball', power=50)
+        e = self.genEnv()
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(50, 70, 80, 1.5))
+        e.weather = 'sun'
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(100, 70, 80, 1))
+        self.assertEqual(calcMove(m, p1, p2, e).move.type, 'fire')
+        e.weather = 'rain'
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(100, 70, 80, 1))
+        self.assertEqual(calcMove(m, p1, p2, e).move.type, 'water')
+        e.weather = 'hail'
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(100, 70, 80, 1))
+        self.assertEqual(calcMove(m, p1, p2, e).move.type, 'ice')
+        e.weather = 'sandstorm'
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(100, 70, 80, 1))
+        self.assertEqual(calcMove(m, p1, p2, e).move.type, 'rock')
+        e.weather = 'fog'
+        self.assertEqual(calcMove(m, p1, p2, e).damage, self.getDamage(100, 70, 80, 1.5))
+        self.assertEqual(calcMove(m, p1, p2, e).move.type, 'normal')
+    
+    
+    def test_json1(self):
+        p1 = self.genPkmn(moves=[self.genMove(category=MoveCategory.nonDamaging), self.genMove(category=MoveCategory.special)])
+        dic = buildDictSetup(p1, self.genPkmn(), self.genEnv())
+        self.assertEqual(json.dumps(dic, sort_keys=True), '{"blue": [{"accuracy": 100, "damage": null, "eff": "normal", "kind": "status"}, {"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}], "red": [{"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}]}')
     
 
 if __name__ == '__main__':

@@ -3,11 +3,10 @@ Created on 02.05.2015
 
 @author: Felk
 '''
-from collections import namedtuple
 from enum import Enum
 
 from tppVisu.move import MoveCategory
-from tppVisu.tables import moveFuncs
+from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
 from copy import deepcopy
@@ -19,7 +18,16 @@ class Kind(Enum):
     ohko        = 'ohko'
     notVisuable = 'notVisuable'
 
-MoveResult = namedtuple('MoveResult', 'kind eff accuracy damage')
+class MoveResult(object):
+    def __init__(self, move, pkmn, opp, env, abilityNotice, moveNotice, accuracy, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
+        self.move = move
+        self.pkmn = pkmn
+        self.opp = opp
+        self.env = env
+        self.accuracy = int(accuracy)
+        self.kind = kind
+        self.eff  = eff
+        self.damage = damage
 
 def calcMove(move, pkmn, opp, env):
     
@@ -28,14 +36,20 @@ def calcMove(move, pkmn, opp, env):
     pkmn = deepcopy(pkmn)
     opp  = deepcopy(opp)
     env  = deepcopy(env)
-    
+     
+    # applying abilities here is redundant, but is eases he program structure.
+    abilityNotice = abilityFuncs.call(pkmn.ability, pkmn, opp, env)
     ovwr = moveFuncs.call(move, pkmn, opp, env)
+    moveNotice = ovwr.notice
     
     if not move.visuable:
-        return MoveResult(Kind.notVisuable, Eff.NORMAL, move.accuracy, (0, 0))
+        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, move.accuracy, kind=Kind.notVisuable)
     
     # calculate final accuracy
-    accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
+    accu = None
+    if move.accuracy != None and move.accuracy >= 0: accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
+    # "no accuracy" modifier might be saved as -1
+    
     # accuracy is a fixed value for OHKO moves
     if move.isOHKOMove():
         accu = 30 + (pkmn.level - opp.level)
@@ -43,7 +57,7 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        return MoveResult(Kind.normal, Eff.NOT, accu, (0, 0))
+        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, eff=Eff.NOT)
     
     ##########################################################
     
@@ -54,7 +68,7 @@ def calcMove(move, pkmn, opp, env):
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
         # TODO implement damage values for special attacks as well (Future sight e.g.)
-        return MoveResult(Kind.status, Eff.NORMAL, accu, (0, 0))
+        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.status)
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()
     else:
@@ -83,18 +97,21 @@ def calcMove(move, pkmn, opp, env):
         modifierType *= pkmn.effs.NORMAL
     
     if move.isOHKOMove():
-        return MoveResult(Kind.ohko, eff, accu, (0, 0))
+        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.ohko, eff=eff)
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
     calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * modifierStab * modifierType * modifierPost
     predamage = tuple(calcSetup(P) for P in power)
+    #if move.minMaxHits != (1, 1): print(predamage)
+    #predamage = tuple(P * H for (P, H) in zip(predamage, move.minMaxHits))
+    #if move.minMaxHits != (1, 1): print(predamage)
     
     # BRN attack nerf
     if pkmn.status == 'brn' and move.category == MoveCategory.physical:
         predamage = tuple(D * pkmn.brnMult for D in predamage)
         
-    damage = ovwr.damage if ovwr.damage != None else (predamage[0] * 0.85, predamage[1])
+    damage = ovwr.damage if ovwr.damage != None else (predamage[0] * move.minMaxHits[0] * 0.85, predamage[1] * move.minMaxHits[1])
     damage = tuple(max(0, D) for D in damage)
 
-    return MoveResult(Kind.normal, eff, accu, damage)
+    return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, eff=eff, damage=damage)
