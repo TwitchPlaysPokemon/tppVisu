@@ -342,9 +342,3 @@ def a_wonder_guard  (pkmn, opp, env):
 def a_mold_breaker  (pkmn, opp, env):
     pass  # consider taken into account
 
-def a_teravolt      (pkmn, opp, env):
-    pass  # consider taken into account
-
-def a_turboblaze    (pkmn, opp, env):
-    pass  # consider taken into account
-
