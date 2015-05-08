@@ -10,11 +10,13 @@ from tppVisu.tables.moveAnomalies import MoveAnomaly
 def call(abilityName, pkmn, opp, env):
     funcname = 'a_' + abilityName.lower().replace(' ', '_')
     try:
-        return globals()[funcname](pkmn, opp, env)
+        globals()[funcname](pkmn, opp, env)
     except KeyError:
-        # default notice. Assume unhandled abilities as not visualizable
-        return 'not visualizable';
+        pass
 
+def isVisuable(abilityName):
+    funcname = 'a_' + abilityName.lower().replace(' ', '_')
+    return funcname in dir()
 
 #####################################################
 #         ABILITY   IMPLEMENTATIONS   BELOW         #
@@ -22,7 +24,6 @@ def call(abilityName, pkmn, opp, env):
 
 # sample method declaration. lowercase, prefixed with a_ and spaces written as _
 # takes the user's and opponent's pokemon plus an environment (see util) as params.
-# Can return a string with a notice message for extra information
 def a_sample_ability(pkmn, opp, env):
     pass
 
@@ -107,6 +108,11 @@ def a_hustle        (pkmn, opp, env):
         if move.category == MoveCategory.physical:
             move.accuracy *= 0.8
 
+def a_immunity      (pkmn, opp, env):
+    if pkmn.status == 'psn':
+        pkmn.status = ''
+    # propably not correctly implemented
+    
 def a_insomnia      (pkmn, opp, env):
     if not opp.breaksMold():
         for move in pkmn.moves:
@@ -197,8 +203,7 @@ def a_sand_veil     (pkmn, opp, env):
     if env.weather == 'sandstorm':
         pkmn.EVA *= 1.2
 
-def a_scrappy       (pkmn, opp, env):
-    return 'not implemented yet ¯\_(ツ)_/¯'
+#def a_scrappy       (pkmn, opp, env):
     # TODO make this
     # Scrappy causes Ghost-type Pokémon to be hit by damage-dealing Normal- and Fighting-type moves inflicted by the user.
 
@@ -262,8 +267,10 @@ def a_swift_swim    (pkmn, opp, env):
         pkmn.SPE *= 2
 
 def a_synchronize   (pkmn, opp, env):
-    if pkmn.status in ['brn', 'psn']:
-        opp.status = pkmn.status
+    if pkmn.status == 'brn' and opp.ability != 'Water Veil':
+        opp.status = 'brn'
+    elif pkmn.status == 'psn' and opp.ability != 'Immunity':
+        opp.status = 'psn'
     elif pkmn.status == 'par' and opp.ability != 'Limber':
         opp.status = 'par'
 

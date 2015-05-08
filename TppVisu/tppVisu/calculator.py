@@ -20,42 +20,36 @@ class Kind(Enum):
     notVisuable = 'notVisuable'
 
 class MoveResult(object):
-    def __init__(self, move, pkmn, opp, env, abilityNotice, moveNotice, accuracy, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
-        self.move = move
-        self.pkmn = pkmn
-        self.opp = opp
+    def __init__(self, env, accuracy, speed, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
         self.env = env
         self.accuracy = int(accuracy)
+        self.speed = int(speed)
         self.kind = kind
         self.eff  = eff
         self.damage = damage
 
-def calcMove(moveIndex, pkmn, opp, env):
-    
-    # dirty workaround for the unittests incoming.
-    # the <move> needs to be primarily in the owner's moves-array.
-    # so I decided to take an INDEX instead of the move object as first argument.
-    # But I do not want to rewrite all the unitttests(yet), so detect if a move object was supplied...
-    if type(moveIndex) is Move:
-        pkmn.moves.append(moveIndex)
-        moveIndex=len(pkmn.moves)-1
-    
-    # work on local copies!
-    pkmn = deepcopy(pkmn)
-    opp  = deepcopy(opp)
+def calcSetup(blue, red, env):
+    # work on local copies
+    blue = deepcopy(blue)
+    red  = deepcopy(red)
     env  = deepcopy(env)
-     
-    # applying abilities here is redundant and somehow ugly...
-    abilityNotice = []
-    abilityNotice.append(abilityFuncs.call(pkmn.ability, pkmn, opp, env))
-    abilityNotice.append(abilityFuncs.call(opp.ability, opp, pkmn, env))
-    move = pkmn.moves[moveIndex]
-        
+    
+    abilityFuncs.call(blue.ability, blue, red, env)
+    abilityFuncs.call(red.ability, red, blue, env)
+    
+    blues = [calcMove(move, blue, red, env) for move in blue.moves]
+    reds  = [calcMove(move, red, blue, env) for move in red.moves]
+    
+    return (blues, reds, env)
+    
+
+def calcMove(move, pkmn, opp, env):
+    
     ovwr = moveFuncs.call(move, pkmn, opp, env)
-    moveNotice = ovwr.notice
+    #moveNotice = ovwr.notice
     
     if not move.visuable:
-        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, move.accuracy, kind=Kind.notVisuable)
+        return MoveResult(env, move.accuracy, pkmn.SPE.get(), kind=Kind.notVisuable)
     
     # calculate final accuracy
     accu = None
@@ -69,7 +63,7 @@ def calcMove(moveIndex, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, eff=Eff.NOT)
+        return MoveResult(env, accu, pkmn.SPE.get(), eff=Eff.NOT)
     
     ##########################################################
     
@@ -79,7 +73,7 @@ def calcMove(moveIndex, pkmn, opp, env):
         
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
-        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.status)
+        return MoveResult(env, accu, pkmn.SPE.get(), kind=Kind.status)
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()
     else:
@@ -108,7 +102,7 @@ def calcMove(moveIndex, pkmn, opp, env):
         modifierType *= pkmn.effs.NORMAL
     
     if move.isOHKOMove():
-        return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, kind=Kind.ohko, eff=eff)
+        return MoveResult(env, accu, pkmn.SPE.get(), kind=Kind.ohko, eff=eff)
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
@@ -122,4 +116,4 @@ def calcMove(moveIndex, pkmn, opp, env):
     damage = ovwr.damage if ovwr.damage != None else (predamage[0] * move.minMaxHits[0] * 0.85, predamage[1] * move.minMaxHits[1])
     damage = tuple(max(0, D) for D in damage)
 
-    return MoveResult(move, pkmn, opp, env, abilityNotice, moveNotice, accu, eff=eff, damage=damage)
+    return MoveResult(env, accu, pkmn.SPE.get(), eff=eff, damage=damage)

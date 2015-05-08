@@ -6,6 +6,7 @@ Created on 28.04.2015
 from enum import IntEnum
 from tppVisu.stat import Stat, StatAccEva
 from tppVisu.util import Stages, TypeSet, Effs
+from tppVisu.tables import abilityFuncs
 
 
 class Gender(IntEnum):
@@ -21,6 +22,7 @@ class Pokemon(object):
         self.type2   = type2
         self.gender  = gender
         self.ability = ability.title() # First letters uppercase
+        self.abilityVisuable = abilityFuncs.isVisuable(self.ability)
         self.moves   = moves
         
         self.HP  = stats.HP
