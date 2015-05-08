@@ -20,7 +20,7 @@ class Pokemon(object):
         self.type1   = type1
         self.type2   = type2
         self.gender  = gender
-        self.ability = ability
+        self.ability = ability.title() # First letters uppercase
         self.moves   = moves
         
         self.HP  = stats.HP

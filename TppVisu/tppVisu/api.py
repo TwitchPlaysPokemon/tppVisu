@@ -9,16 +9,16 @@ def buildDictSetup(pkmn, opp, env):
     setup = {}
     setup['blue'] = []
     setup['red'] = []
-    for move in pkmn.moves:
-        res = calcMove(move, pkmn, opp, env)
+    for i in range(len(pkmn.moves)):
+        res = calcMove(i, pkmn, opp, env)
         data = {}
         data['kind'] = res.kind.value
         data['eff'] = res.eff.value
         data['damage'] = res.damage
         data['accuracy'] = res.accuracy
         setup['blue'].append(data)
-    for move in opp.moves:
-        res = calcMove(move, opp, pkmn, env)
+    for i in range(len(opp.moves)):
+        res = calcMove(i, opp, pkmn, env)
         data = {}
         data['kind'] = res.kind.value
         data['eff'] = res.eff.value

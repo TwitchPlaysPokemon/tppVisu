@@ -10,6 +10,7 @@ from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
 from copy import deepcopy
+from tppVisu.move import Move
 
 
 class Kind(Enum):
@@ -29,10 +30,17 @@ class MoveResult(object):
         self.eff  = eff
         self.damage = damage
 
-def calcMove(move, pkmn, opp, env):
+def calcMove(moveIndex, pkmn, opp, env):
+    
+    # dirty workaround for the unittests incoming.
+    # the <move> needs to be primarily in the owner's moves-array.
+    # so I decided to take an INDEX instead of the move object as first argument.
+    # But I do not want to rewrite all the unitttests(yet), so detect if a move object was supplied...
+    if type(moveIndex) is Move:
+        pkmn.moves.append(moveIndex)
+        moveIndex=len(pkmn.moves)-1
     
     # work on local copies!
-    move = deepcopy(move)
     pkmn = deepcopy(pkmn)
     opp  = deepcopy(opp)
     env  = deepcopy(env)
@@ -41,7 +49,8 @@ def calcMove(move, pkmn, opp, env):
     abilityNotice = []
     abilityNotice.append(abilityFuncs.call(pkmn.ability, pkmn, opp, env))
     abilityNotice.append(abilityFuncs.call(opp.ability, opp, pkmn, env))
-    
+    move = pkmn.moves[moveIndex]
+        
     ovwr = moveFuncs.call(move, pkmn, opp, env)
     moveNotice = ovwr.notice
     
@@ -105,9 +114,6 @@ def calcMove(move, pkmn, opp, env):
     
     calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * modifierStab * modifierType * modifierPost
     predamage = tuple(calcSetup(P) for P in power)
-    #if move.minMaxHits != (1, 1): print(predamage)
-    #predamage = tuple(P * H for (P, H) in zip(predamage, move.minMaxHits))
-    #if move.minMaxHits != (1, 1): print(predamage)
     
     # BRN attack nerf
     if pkmn.status == 'brn' and move.category == MoveCategory.physical:
