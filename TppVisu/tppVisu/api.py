@@ -5,7 +5,7 @@ Created on 08.05.2015
 '''
 from tppVisu.calculator import calcMove
 
-def buildJsonSetup(pkmn, opp, env):
+def buildDictSetup(pkmn, opp, env):
     setup = {}
     setup['blue'] = []
     setup['red'] = []
