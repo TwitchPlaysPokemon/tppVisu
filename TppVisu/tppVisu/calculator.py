@@ -3,7 +3,6 @@ Created on 02.05.2015
 
 @author: Felk
 '''
-from collections import namedtuple
 from enum import Enum
 
 from tppVisu.move import MoveCategory
@@ -19,7 +18,15 @@ class Kind(Enum):
     ohko        = 'ohko'
     notVisuable = 'notVisuable'
 
-MoveResult = namedtuple('MoveResult', 'kind eff accuracy damage')
+class MoveResult(object):
+    def __init__(self, pkmn, opp, env, accuracy, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
+        self.pkmn = pkmn
+        self.opp = opp
+        self.env = env
+        self.accuracy = accuracy
+        self.kind = kind
+        self.eff  = eff
+        self.damage = damage
 
 def calcMove(move, pkmn, opp, env):
     
@@ -32,7 +39,7 @@ def calcMove(move, pkmn, opp, env):
     ovwr = moveFuncs.call(move, pkmn, opp, env)
     
     if not move.visuable:
-        return MoveResult(Kind.notVisuable, Eff.NORMAL, move.accuracy, (0, 0))
+        return MoveResult(pkmn, opp, env, move.accuracy, kind=Kind.notVisuable)
     
     # calculate final accuracy
     accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
@@ -43,7 +50,7 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        return MoveResult(Kind.normal, Eff.NOT, accu, (0, 0))
+        return MoveResult(pkmn, opp, env, accu, eff=Eff.NOT)
     
     ##########################################################
     
@@ -54,7 +61,7 @@ def calcMove(move, pkmn, opp, env):
     if move.category == MoveCategory.nonDamaging:
         # No more calculating needed
         # TODO implement damage values for special attacks as well (Future sight e.g.)
-        return MoveResult(Kind.status, Eff.NORMAL, accu, (0, 0))
+        return MoveResult(pkmn, opp, env, accu, kind=Kind.status)
     elif move.category == MoveCategory.physical:
         valueAtkDef = pkmn.ATK.get() / opp.DEF.get()
     else:
@@ -83,7 +90,7 @@ def calcMove(move, pkmn, opp, env):
         modifierType *= pkmn.effs.NORMAL
     
     if move.isOHKOMove():
-        return MoveResult(Kind.ohko, eff, accu, (0, 0))
+        return MoveResult(pkmn, opp, env, accu, kind=Kind.ohko, eff=eff)
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
@@ -97,4 +104,4 @@ def calcMove(move, pkmn, opp, env):
     damage = ovwr.damage if ovwr.damage != None else (predamage[0] * 0.85, predamage[1])
     damage = tuple(max(0, D) for D in damage)
 
-    return MoveResult(Kind.normal, eff, accu, damage)
+    return MoveResult(pkmn, opp, env, accu, eff=eff, damage=damage)
