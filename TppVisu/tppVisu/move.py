@@ -18,7 +18,7 @@ class MoveCategory(Enum):
 
 class Move(object): 
     def __init__(self, name, description, type, category, power, pp, accuracy):
-        self.name        = name
+        self.name        = name.title() # First letters uppercase
         self.description = description
         self.type        = type
         self.category    = category
