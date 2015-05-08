@@ -37,8 +37,11 @@ def calcMove(move, pkmn, opp, env):
     opp  = deepcopy(opp)
     env  = deepcopy(env)
      
-    # applying abilities here is redundant, but is eases he program structure.
-    abilityNotice = abilityFuncs.call(pkmn.ability, pkmn, opp, env)
+    # applying abilities here is redundant and somehow ugly...
+    abilityNotice = []
+    abilityNotice.append(abilityFuncs.call(pkmn.ability, pkmn, opp, env))
+    abilityNotice.append(abilityFuncs.call(opp.ability, opp, pkmn, env))
+    
     ovwr = moveFuncs.call(move, pkmn, opp, env)
     moveNotice = ovwr.notice
     
