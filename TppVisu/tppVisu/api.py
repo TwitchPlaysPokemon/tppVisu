@@ -3,27 +3,29 @@ Created on 08.05.2015
 
 @author: Felk
 '''
-from tppVisu.calculator import calcMove
+from tppVisu.calculator import calcSetup
 
-def buildDictSetup(pkmn, opp, env):
+def buildDictSetup(blue, red, env):
+    blues, reds, envOut = calcSetup(blue, red, env)
     setup = {}
+    setup['weather'] = envOut.weather
     setup['blue'] = []
     setup['red'] = []
-    for i in range(len(pkmn.moves)):
-        res = calcMove(i, pkmn, opp, env)
+    for b in blues:
         data = {}
-        data['kind'] = res.kind.value
-        data['eff'] = res.eff.value
-        data['damage'] = res.damage
-        data['accuracy'] = res.accuracy
+        data['kind'] = b.kind.value
+        data['eff'] = b.eff.value
+        data['damage'] = b.damage
+        data['accuracy'] = b.accuracy
+        data['speed'] = b.speed
         setup['blue'].append(data)
-    for i in range(len(opp.moves)):
-        res = calcMove(i, opp, pkmn, env)
+    for r in reds:
         data = {}
-        data['kind'] = res.kind.value
-        data['eff'] = res.eff.value
-        data['damage'] = res.damage
-        data['accuracy'] = res.accuracy
+        data['kind'] = r.kind.value
+        data['eff'] = r.eff.value
+        data['damage'] = r.damage
+        data['accuracy'] = r.accuracy
+        data['speed'] = r.speed
         setup['red'].append(data)
         
     return setup

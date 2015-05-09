@@ -8,9 +8,8 @@ import unittest
 
 from tppVisu.move import MoveCategory, Move
 from tppVisu.pokemon import Pokemon, Gender
-from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Stats, Environment
-from tppVisu.calculator import Eff, calcSetup, Kind
+from tppVisu.calculator import Eff, calcSetup
 
 
 class TppVisuAbilityTests(unittest.TestCase):
@@ -33,7 +32,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         
     def getDamage(self, power, ATK, DEF, mult=1):
         dmg = ((210/250) * (ATK/DEF) * power + 2) * mult
-        return (dmg*0.85, dmg)
+        return (int(dmg*0.85), int(dmg))
         
     def genEnv(self, weather='none'):
         return Environment(weather)

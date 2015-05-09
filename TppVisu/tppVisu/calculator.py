@@ -10,7 +10,6 @@ from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff
 from copy import deepcopy
-from tppVisu.move import Move
 from collections import namedtuple
 
 
@@ -30,11 +29,15 @@ class MoveResult(object):
         self.speed = int(speed)
         self.kind = kind
         self.eff  = eff
-        self.damage = damage
+        if damage == None:
+            self.damage = None
+        else:
+            self.damage = tuple(int(D) for D in damage)
         
 SetupResult = namedtuple('Setupresult', 'blues reds env')
 
 def calcSetup(blue, red, env):
+    
     # work on local copies
     blue = deepcopy(blue)
     red  = deepcopy(red)
@@ -119,7 +122,7 @@ def calcMove(move, pkmn, opp, env):
     if pkmn.status == 'brn' and move.category == MoveCategory.physical:
         predamage = tuple(D * pkmn.brnMult for D in predamage)
         
-    damage = ovwr.damage if ovwr.damage != None else (predamage[0] * move.minMaxHits[0] * 0.85, predamage[1] * move.minMaxHits[1])
+    damage = ovwr.damage if ovwr.damage != None else (int(predamage[0] * 0.85)* move.minMaxHits[0], int(predamage[1]) * move.minMaxHits[1])
     damage = tuple(max(0, D) for D in damage)
 
     return MoveResult(env, accu, pkmn.SPE.get(), eff=eff, damage=damage)
