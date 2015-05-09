@@ -1,5 +1,5 @@
 '''
-Created on 28.04.2015
+Created on 09.05.2015
 
 @author: Felk
 '''
@@ -9,11 +9,10 @@ import unittest
 from tppVisu.calculator import Eff, calcSetup, Kind
 from tppVisu.move import MoveCategory, Move
 from tppVisu.pokemon import Pokemon, Gender
-from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Stats, Environment
 
 
-class TppVisuTests(unittest.TestCase):
+class TppVisuMoveTests(unittest.TestCase):
     
     def genStats(self, HP=100, ATK=100, DEF=100, SPA=100, SPD=100, SPE=100):
         return Stats(HP, ATK, DEF, SPA, SPD, SPE)
@@ -50,122 +49,6 @@ class TppVisuTests(unittest.TestCase):
     def assertSuperEffective(self, result):
         self.assertEqual(result.eff, Eff.SUPER)
     
-    def test_stats1(self):
-        p = self.genPkmn(stats=self.genStats(HP=100, ATK=90, DEF=80, SPA=70, SPD=60, SPE=50))
-        self.assertEqual(p.HP, 100)
-        self.assertEqual(p.ATK.get(), 90)
-        self.assertEqual(p.DEF.get(), 80)
-        self.assertEqual(p.SPA.get(), 70)
-        self.assertEqual(p.SPD.get(), 60)
-        self.assertEqual(p.SPE.get(), 50)
-        
-    def test_stats2(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100, SPA=100, SPD=100, SPE=100))
-        p.ATK.stageAdd(1)
-        p.DEF.stageAdd(2)
-        p.SPA.stageAdd(3)
-        p.SPD.stageAdd(4)
-        p.SPE.stageAdd(5)
-        self.assertEqual(p.ATK.get(), 150)
-        self.assertEqual(p.DEF.get(), 200)
-        self.assertEqual(p.SPA.get(), 250)
-        self.assertEqual(p.SPD.get(), 300)
-        self.assertEqual(p.SPE.get(), 350)
-        p.ATK.stageAdd(5)
-        self.assertEqual(p.ATK.get(), 400)
-        
-    def test_stats3(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100, SPA=100, SPD=100, SPE=100))
-        p.ATK.stageAdd(-1)
-        p.DEF.stageAdd(-2)
-        p.SPA.stageAdd(-3)
-        p.SPD.stageAdd(-4)
-        p.SPE.stageAdd(-5)
-        self.assertEqual(p.ATK.get(), int(200 / 3))
-        self.assertEqual(p.DEF.get(), int(200 / 4))
-        self.assertEqual(p.SPA.get(), int(200 / 5))
-        self.assertEqual(p.SPD.get(), int(200 / 6))
-        self.assertEqual(p.SPE.get(), int(200 / 7))
-        p.ATK.stageAdd(-5)
-        self.assertEqual(p.ATK.get(), int(200 / 8))
-        
-    def test_stats4(self):
-        p = self.genPkmn()
-        p.EVA.stageAdd(1)
-        p.ACC.stageAdd(2)
-        self.assertEqual(p.EVA.get(), 133 / 100)
-        self.assertEqual(p.ACC.get(), 166 / 100)
-        p.EVA.stageAdd(2)
-        p.ACC.stageAdd(2)
-        self.assertEqual(p.EVA.get(), 200 / 100)
-        self.assertEqual(p.ACC.get(), 250 / 100)
-        p.EVA.stageAdd(2)
-        p.ACC.stageAdd(2)
-        self.assertEqual(p.EVA.get(), 266 / 100)
-        self.assertEqual(p.ACC.get(), 300 / 100)
-        
-    def test_stats5(self):
-        p = self.genPkmn()
-        p.EVA.stageAdd(-1)
-        p.ACC.stageAdd(-2)
-        self.assertEqual(p.EVA.get(), 75 / 100)
-        self.assertEqual(p.ACC.get(), 60 / 100)
-        p.EVA.stageAdd(-2)
-        p.ACC.stageAdd(-2)
-        self.assertEqual(p.EVA.get(), 50 / 100)
-        self.assertEqual(p.ACC.get(), 43 / 100)
-        p.EVA.stageAdd(-2)
-        p.ACC.stageAdd(-2)
-        self.assertEqual(p.EVA.get(), 36 / 100)
-        self.assertEqual(p.ACC.get(), 33 / 100)
-        
-    def test_stats6(self):
-        p = self.genPkmn(stats=self.genStats(ATK=93))
-        p.ATK.stageAdd(1)
-        self.assertEqual(p.ATK.get(), int(93*1.5))
-        p.ATK *= 2
-        self.assertEqual(p.ATK.get(), int(93*1.5*2))
-        p.ATK.stageAdd(2)
-        self.assertEqual(p.ATK.get(), int(93*2.5*2))
-        p.ATK = p.ATK * 0.5
-        self.assertEqual(p.ATK.get(), int(93*2.5))
-        
-    def test_moveMinMaxHits(self):
-        m1 = self.genMove(name='Double Slap')
-        m2 = self.genMove(name='Triple Kick')
-        m3 = self.genMove(name='Tackle')
-        self.assertEqual(m1.minMaxHits, (2, 5))
-        self.assertEqual(m2.minMaxHits, (1, 3))
-        self.assertEqual(m3.minMaxHits, (1, 1))
-        
-    def test_movePriority(self):
-        m1 = self.genMove(name='Helping Hand')
-        m2 = self.genMove(name='Extreme Speed')
-        m3 = self.genMove(name='Mirror Coat')
-        m4 = self.genMove(name='Flamethrower')
-        self.assertEqual(m1.priority, 5)
-        self.assertEqual(m2.priority, 1)
-        self.assertEqual(m3.priority, -5)
-        self.assertEqual(m4.priority, 0)
-        
-    def test_moveVisuable(self):
-        m1 = self.genMove(name='Endeavor')
-        m2 = self.genMove(name='Hidden Power')
-        m3 = self.genMove(name='Hidden Power Psychic')
-        m4 = self.genMove(name='Frustration')
-        self.assertFalse(m1.visuable)
-        self.assertFalse(m2.visuable)
-        self.assertTrue(m3.visuable)
-        self.assertTrue(m4.visuable)
-        
-    def test_typeEffs(self):
-        self.assertEqual(getEff('water', 'fire'), 2)
-        self.assertEqual(getEff('water', 'rock') * getEff('water', 'ground'), 4)
-        self.assertEqual(getEff('water', 'water'), 0.5)
-        self.assertEqual(getEff('grass', 'steel'), 0.5)
-        self.assertEqual(getEff('ghost', 'normal'), 0)
-        self.assertEqual(getEff('water', 'flying'), 1)
-        
     def test_move_arm_thrust(self):
         p1 = self.genPkmn(stats=self.genStats(ATK=332), type1="dragon", moves=[self.genMove(name='Arm Thrust', power=15)]) # no stab
         p2 = self.genPkmn(stats=self.genStats(DEF=223))
@@ -356,12 +239,6 @@ class TppVisuTests(unittest.TestCase):
         e.weather = 'fog'
         self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5))
         #self.assertEqual(calcSetup(p1, p2, e).move.type, 'normal')
-    
-    
-    #def test_json1(self):
-    #    p1 = self.genPkmn(moves=[self.genMove(category=MoveCategory.nonDamaging), self.genMove(category=MoveCategory.special)])
-    #    dic = buildDictSetup(p1, self.genPkmn(), self.genEnv())
-    #    self.assertEqual(json.dumps(dic, sort_keys=True), '{"blue": [{"accuracy": 100, "damage": null, "eff": "normal", "kind": "status"}, {"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}], "red": [{"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}]}')
     
 
 if __name__ == '__main__':
