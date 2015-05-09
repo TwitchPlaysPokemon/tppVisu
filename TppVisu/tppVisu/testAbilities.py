@@ -33,7 +33,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         
     def getDamage(self, power, ATK, DEF, mult=1):
         dmg = ((210/250) * (ATK/DEF) * power + 2) * mult
-        return (dmg*0.85, dmg)
+        return (int(dmg*0.85), int(dmg))
         
     def genEnv(self, weather='none'):
         return Environment(weather)
@@ -51,13 +51,24 @@ class TppVisuAbilityTests(unittest.TestCase):
         self.assertEqual(result.eff, Eff.SUPER)
 
     def test_ability_adaptability(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="adaptability")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="adaptability",type1="fire")
+        p.moves = [self.genMove(power=70,type="fire"),self.genMove(power=70,type="normal")]
+        self.assertEqual(p.moves[0].isRecoilMove(),True)
+        pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,2))
+        self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
         pass
     def test_ability_aftermath(self):
         pass #Not visualizeable; The damage isn't added onto any move
     def test_ability_air_lock(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="air lock")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="air lock")
+        p2 = self.genPkmn()
+        p2.moves = [self.genMove(name="Rain Dance")]
+        pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
+        
+        self.assertNotEffective(attackdamage[0])
+        self.assertEqual(env.weather,"none") #maybe not technically correct, but close enough
+
     def test_ability_anger_point(self):
         pass #Not visualizeable; who knows when crits happen?
     def test_ability_anticipation(self):
@@ -71,29 +82,50 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_blaze(self):
         pass #Not visualizeable
     def test_ability_cacophony(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="cacophony")
-        pass
+        pass #It's an unused ability!
     def test_ability_chlorophyll(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="chlorophyll")
-        pass
+        pass #Not visualizeable; it affects speed
     def test_ability_clear_body(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="clear body")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="clear body")
+        p2 = self.genPkmn(stats=self.genStats(ATK=100))
+        p2.moves = [self.genMove(name="Swagger"),self.genMove(name="Growl")]
+        d2 = calcSetup(p2,p,self.genEnv()).blues
+        self.assertNormalEffective(d2[0])
+        self.assertNotEffective(d2[1])
+        
+        p2.ability = "Mold Breaker"
+        d2 = calcSetup(p2,p,self.genEnv()).blues
+        self.assertNormalEffective(d2[0])
+        self.assertNormalEffective(d2[1])
     def test_ability_cloud_nine(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="cloud nine")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="cloud nine")
+        p2 = self.genPkmn()
+        p2.moves = [self.genMove(name="Rain Dance")]
+        pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
+        
+        self.assertNotEffective(attackdamage[0])
+        self.assertEqual(env.weather,"none") #maybe not technically correct, but close enough
     def test_ability_color_change(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="color change")
-        pass
+        pass #Not visualizeable
     def test_ability_compound_eyes(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="compound eyes")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="compound eyes")
+        p2 = self.genPkmn(stats=self.genStats(ATK=100,DEF=100))
+        m = self.genMove(accuracy=10)
+        p.moves = [self.genMove(accuracy=10),self.genMove(accuracy=80)]
+        pdamage = calcSetup(p, p2, self.genEnv()).blues
+        self.assertEqual(pdamage[0].accuracy, 10 * 1.3) 
+        self.assertEqual(pdamage[1].accuracy, 100) #Upper cap of 100
         pass
     def test_ability_cute_charm(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="cute charm")
-        pass
+        pass #Not visualizeable
     def test_ability_damp(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="damp")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="damp")
+        p2 = self.genPkmn(stats=self.genStats(ATK=100))
+        p2.moves = [self.genMove(name="Selfdestruct"),self.genMove(name="Tackle")]
+        d2 = calcSetup(p2,p,self.genEnv()).blues
+        self.assertNotEffective(d2[0])
+        self.assertNormalEffective(d2[1])
+        #It also prevents aftermath, but we can't test for that
     def test_ability_download(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="download")
         pass
@@ -183,7 +215,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         self.assertEqual(m.isPunchingMove(),True)
         self.assertEqual(m2.isPunchingMove(),False)
         p.moves = [m, m2] # don't just append. array is not empty by default, has a 'Testmove'
-        d1,d2,env = calcSetup(p, self.genPkmn(), self.genEnv())
+        d1 = calcSetup(p, self.genPkmn(), self.genEnv()).blues
         self.assertEqual(d1[0].damage, self.getDamage(70*1.2,100,100)) # increases base power
         self.assertEqual(d1[1].damage, self.getDamage(70,100,100))
     def test_ability_keen_eye(self):
@@ -241,8 +273,8 @@ class TppVisuAbilityTests(unittest.TestCase):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="no guard")
         p2 = self.genPkmn(stats=self.genStats(ATK=100,DEF=100))
         m = self.genMove(accuracy=10)
-        p.moves.append(m)
-        p2.moves.append(m)
+        p.moves = [m]
+        p2.moves =  [m]
         pdamage,attackdamage,env = calcSetup(p, p2, self.genEnv())
         self.assertEqual(pdamage[0].accuracy, None)
         self.assertEqual(attackdamage[0].accuracy, None)
@@ -266,16 +298,21 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_pressure(self):
         pass #Pretty much useless.
     def test_ability_pure_power(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="pure power")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="pure power", moves=[self.genMove(power=70)])
+        pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,2))
     def test_ability_quick_feet(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="quick feet")
         pass
     def test_ability_rain_dish(self):
         pass #Not visualizeable; HP over time isn't implemented
     def test_ability_reckless(self):
-        #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="reckless")
-        pass
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="reckless")
+        p.moves = [self.genMove(name="Flare Blitz",power=70),self.genMove(name="Tackle",power=70)]
+        self.assertEqual(p.moves[0].isRecoilMove(),True)
+        pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,1.2))
+        self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
     def test_ability_rivalry(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="rivalry",gender=Gender.male)
         if not p.abilityVisuable:

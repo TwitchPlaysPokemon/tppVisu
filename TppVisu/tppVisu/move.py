@@ -101,4 +101,17 @@ class Move(object):
                              'Sleep Powder',
                              'Sport',
                              'Yawn']
+    def isRecoilMove(self):
+        return self.name in ['Brave Bird',
+                             'Double-Edge',
+                             'Flare Blitz',
+                             'Head Charge',
+                             'Head Smash',
+                             'High Jump Kick',
+                             'Jump Kick',
+                             'Submission',
+                             'Take Down',
+                             'Volt Tackle',
+                             'Wood Hammer',
+                             'Wild Charge']
 
