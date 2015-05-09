@@ -352,8 +352,8 @@ class TppVisuAbilityTests(unittest.TestCase):
         p2.moves = [notsound,soundm]
         
         pdamage,attackdamage,env = calcSetup(p, p2, self.genEnv())
-        self.assertEqual(attackdamage[0].eff, Eff.NORMAL)
-        self.assertNotEffective(attackdamage[1].eff, Eff.NOT)
+        self.assertNormalEffective(attackdamage[0])
+        self.assertNotEffective(attackdamage[1])
     def test_ability_speed_boost(self):
         pass  #Non-visualizable
     def test_ability_stall(self):
@@ -464,14 +464,14 @@ class TppVisuAbilityTests(unittest.TestCase):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="white smoke")
         pass
     def test_ability_wonder_guard(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="wonder guard",type="grass")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="wonder guard",type1="grass")
         attackingmon = self.genPkmn(stats=self.genStats(ATK=100))
         nveffective = self.genMove(type="water",power=70)
         supereffective = self.genMove(type="fire",power=70)
         normaleffective = self.genMove(type="normal",power=70)
         attackingmon.moves=[nveffective,supereffective,normaleffective]
         
-        attackdamages = self.calcSetup(attackingmon,p,self.genEnv())
+        attackdamages = calcSetup(attackingmon,p,self.genEnv()).blues
         self.assertEqual(attackdamages[0].damage, self.getDamage(70,100,100,0)) #nveffective won't hit
         self.assertEqual(attackdamages[1].damage, self.getDamage(70,100,100)) #super will hit
         self.assertEqual(attackdamages[2].damage, self.getDamage(70,100,100,0)) #normal effectiveness won't hit
