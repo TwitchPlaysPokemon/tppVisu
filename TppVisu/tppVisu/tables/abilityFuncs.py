@@ -128,9 +128,12 @@ def a_iron_fist     (pkmn, opp, env):
             move.power *= 1.2
 
 def a_keen_eye      (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Flash', 'Kinesis', 'Sand Attack', 'Smokescreen']:
+            move.disable()
     if pkmn.ACC.stage < 0:
         pkmn.ACC.stage = 0
-    # Not 100% correct I believe.
+    # Latter not 100% correct I believe.
 
 def a_leaf_guard    (pkmn, opp, env):
     if env.weather == 'sun':
@@ -150,9 +153,12 @@ def a_lightning_rod (pkmn, opp, env):
         if move.type == 'electric': move.accuracy = None
 
 def a_limber        (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Glare', 'Stun Spore', 'Thunder Wave']:
+            move.disable()
     if pkmn.status == 'par':
         pkmn.status = ''
-    # propably not correctly implemented
+    # latter propably not correctly implemented
 
 def a_magma_armor   (pkmn, opp, env):
     if pkmn.status == 'frz':
@@ -330,14 +336,17 @@ def a_water_absorb  (pkmn, opp, env):
         opp.typeMults.water = 0
 
 def a_water_veil    (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name == 'Will-O-Wisp':
+            move.disable()
     if not opp.breaksMold() and pkmn.status == 'brn':
         pkmn.status = ''
-    # propably not correctly implemented
+    # latter propably not correctly implemented
 
 def a_wonder_guard  (pkmn, opp, env):
     if not opp.breaksMold():
-        opp.effs.weak = 0
-        opp.effs.normal = 0
+        opp.effs.WEAK = 0
+        opp.effs.NORMAL = 0
 
 def a_mold_breaker  (pkmn, opp, env):
     pass  # consider taken into account

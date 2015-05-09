@@ -32,7 +32,7 @@ class TypeSet(object):
         self.poison  = poison   ;   self.ground = ground  ;   self.flying   = flying
         self.psychic = psychic  ;   self.bug    = bug     ;   self.rock     = rock
         self.ghost   = ghost    ;   self.dragon = dragon  ;   self.dark     = dark
-        self.steel   = steel
+        self.steel   = steel    ;   self.electric=electric
 
 # namedtuples as convenient 'data bags'. They are like immutable structs.
 # stats uppercase, because 'def' is a keyword
