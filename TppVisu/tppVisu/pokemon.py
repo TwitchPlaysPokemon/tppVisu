@@ -52,7 +52,7 @@ class Pokemon(object):
         return self.ability in ['Mold Breaker', 'Teravolt', 'Turboblaze']
     
     def isUntraceable(self):
-        return self.ability in ['Multitype', 'Illusion', 'Flower Gift', 'Imposter', 'Stance Change']
+        return self.ability in ['Multitype', 'Illusion', 'Flower Gift', 'Imposter', 'Stance Change', 'Trace']
     
     def disablesWeather(self):
         return self.ability in ['Cloud Nine', 'Air Lock']

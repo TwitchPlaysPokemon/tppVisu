@@ -299,6 +299,7 @@ def a_tinted_lens   (pkmn, opp, env):
 def a_trace         (pkmn, opp, env): 
     if not opp.isUntraceable():
         pkmn.ability = opp.ability
+        call(pkmn.ability, pkmn, opp, env)
 
 def a_unaware       (pkmn, opp, env):
     opp.ATK.stage = 0
