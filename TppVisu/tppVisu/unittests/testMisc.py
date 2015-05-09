@@ -153,11 +153,6 @@ class TppVisuMiscTests(unittest.TestCase):
         self.assertEqual(getEff('ghost', 'normal'), 0)
         self.assertEqual(getEff('water', 'flying'), 1)
     
-    #def test_json1(self):
-    #    p1 = self.genPkmn(moves=[self.genMove(category=MoveCategory.nonDamaging), self.genMove(category=MoveCategory.special)])
-    #    dic = buildDictSetup(p1, self.genPkmn(), self.genEnv())
-    #    self.assertEqual(json.dumps(dic, sort_keys=True), '{"blue": [{"accuracy": 100, "damage": null, "eff": "normal", "kind": "status"}, {"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}], "red": [{"accuracy": 100, "damage": [109.64999999999999, 129.0], "eff": "normal", "kind": "normal"}]}')
-    
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,9 +8,8 @@ import unittest
 
 from tppVisu.move import MoveCategory, Move
 from tppVisu.pokemon import Pokemon, Gender
-from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Stats, Environment
-from tppVisu.calculator import Eff, calcSetup, Kind
+from tppVisu.calculator import Eff, calcSetup
 
 
 class TppVisuAbilityTests(unittest.TestCase):
