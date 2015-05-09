@@ -23,7 +23,10 @@ class Kind(Enum):
 class MoveResult(object):
     def __init__(self, env, accuracy, speed, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
         self.env = env
-        self.accuracy = int(accuracy)
+        if accuracy == None:
+            self.accuracy = None
+        else:
+            self.accuracy = int(accuracy)
         self.speed = int(speed)
         self.kind = kind
         self.eff  = eff
