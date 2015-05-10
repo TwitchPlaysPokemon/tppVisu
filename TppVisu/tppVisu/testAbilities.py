@@ -476,7 +476,7 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_sturdy(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="sturdy")
         p2 = self.genPkmn(moves=[self.genMove(name="Guillotine"),self.genMove(power=99999,name="OVERPOWEREDNONCANONICALMEGALASEROFDOOM")])
-        attackdamage = calcSetup(p2,p,self.genEnv()).blue
+        attackdamage = calcSetup(p2,p,self.genEnv()).blues
         self.assertEqual(p2.moves[0].isOHKOMove(),True)
         
         self.assertNotEffective(attackdamage[0])
