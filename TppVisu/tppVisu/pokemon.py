@@ -18,8 +18,8 @@ class Pokemon(object):
     def __init__(self, natID, name, type1, type2, stats, moves, gender, ability, status='', statusVolatile='', happiness=0, level=100, weight=1, stages=Stages(0, 0, 0, 0, 0, 0, 0)):
         self.natID   = natID
         self.name    = name
-        self.type1   = type1.lower()
-        self.type2   = type2.lower()
+        self.type1   = type1.lower() if type1 != None else None
+        self.type2   = type2.lower() if type2 != None else None
         self.gender  = gender
         self.ability = ability.title() # First letters uppercase
         self.abilityVisuable = abilityFuncs.isVisuable(self.ability)
