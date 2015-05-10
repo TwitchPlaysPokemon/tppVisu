@@ -88,34 +88,34 @@ def calcMove(move, pkmn, opp, env):
     else:
         valueAtkDef = pkmn.SPA.get() / opp.SPD.get()
         
-    modifierStab = 1
-    if pkmn.type1 == move.type: modifierStab *= pkmn.stab
-    if pkmn.type2 == move.type: modifierStab *= pkmn.stab
+    StabModifier = 1
+    if pkmn.type1 == move.type: StabModifier *= pkmn.stab
+    if pkmn.type2 == move.type: StabModifier *= pkmn.stab
     
-    modifierType = getEff(move.type, opp.type1)
-    if opp.type2: modifierType *= getEff(move.type, opp.type2)
+    TypeModifier = getEff(move.type, opp.type1)
+    if opp.type2: TypeModifier *= getEff(move.type, opp.type2)
     
-    modifierPost = getattr(pkmn.typeMults, move.type)
+    PostModifier = getattr(pkmn.typeMults,move.type)
     
-    if modifierType == 0 or modifierPost == 0:
+    if TypeModifier == 0 or PostModifier == 0:
         eff = Eff.NOT
-        modifierType = pkmn.effs.NOT
-    elif modifierType < 1:
+        TypeModifier = pkmn.effs.NOT
+    elif TypeModifier < 1:
         eff = Eff.WEAK
-        modifierType *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier
-    elif modifierType > 1:
+        TypeModifier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
+    elif TypeModifier > 1:
         eff = Eff.SUPER
-        modifierType *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
+        TypeModifier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
     else:
         eff = Eff.NORMAL
-        modifierType *= pkmn.effs.NORMAL
+        TypeModifier *= pkmn.effs.NORMAL
     
     if move.isOHKOMove():
         return MoveResult(env, accu, pkmn.SPE.get(), kind=Kind.ohko, eff=eff)
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
-    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * modifierStab * modifierType * modifierPost
+    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * StabModifier * TypeModifier * PostModifier
     predamage = tuple(calcSetup(P) for P in power)
     
     # BRN attack nerf

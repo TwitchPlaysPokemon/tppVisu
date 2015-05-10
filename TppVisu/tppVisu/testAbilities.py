@@ -56,7 +56,6 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_adaptability(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="adaptability",type1="fire")
         p.moves = [self.genMove(power=70,type="fire"),self.genMove(power=70,type="normal")]
-        self.assertEqual(p.moves[0].isRecoilMove(),True)
         pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
         self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,2))
         self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
@@ -203,8 +202,8 @@ class TppVisuAbilityTests(unittest.TestCase):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="huge power")
         p.moves = [self.genMove(power=70,category=MoveCategory.physical),self.genMove(power=70,category=MoveCategory.special)]
         pdamage = calcSetup(p,self.genPkmn(),self.genEnv()).blues
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,2))
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,1))
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100*2,100))
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100))
     def test_ability_hustle(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="hustle")
         pass
@@ -291,7 +290,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         pass
     def test_ability_magic_guard(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="magic guard")
-        p2 = self.genPkmn(moves=[self.genMove(name="Toxic"),self.genMove(name="Curse"),self.genMove(name="Leech Seed")])
+        p2 = self.genPkmn(moves=[self.genMove(name="Toxic"),self.genMove(name="Curse"),self.genMove(name="Leech Seed")],type1="ghost")
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
         for attack in attackdamage:
           self.assertNotEffective(attack)
@@ -354,7 +353,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         p.moves = [self.genMove(name="Flare Blitz",power=70),self.genMove(name="Tackle",power=70)]
         self.assertEqual(p.moves[0].isRecoilMove(),True)
         pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,1.2))
+        self.assertEqual(pdamage[0].damage, self.getDamage(70*1.2,100,100))
         self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
     def test_ability_rivalry(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="rivalry",gender=Gender.male)

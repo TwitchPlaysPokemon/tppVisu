@@ -43,6 +43,8 @@ def a_cloud_nine    (pkmn, opp, env):
 def a_compound_eyes (pkmn, opp, env):
     for move in pkmn.moves:
         move.accuracy *= 1.3;
+        if move.accuracy > 100:
+            move.accuracy = 100
     
 def a_damp          (pkmn, opp, env):
     for move in pkmn.moves:
@@ -70,8 +72,8 @@ def a_dry_skin      (pkmn, opp, env):
     opp.typeMults.water = 0
 
 def a_filter        (pkmn, opp, env):
-    pkmn.effs.super *= 0.75
-    opp.effs.super *= 0.75
+    pkmn.effs.SUPER *= 0.75
+    opp.effs.SUPER *= 0.75
 
 def a_flash_fire    (pkmn, opp, env):
     opp.typeMults.fire = 0
@@ -156,9 +158,15 @@ def a_limber        (pkmn, opp, env):
     for move in opp.moves:
         if move.name in ['Glare', 'Stun Spore', 'Thunder Wave']:
             move.disable()
-    if pkmn.status == 'par':
-        pkmn.status = ''
-    # latter propably not correctly implemented
+            
+    
+def a_magic_guard   (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Leech Seed', 'Toxic',"Will-o-Wisp"]:
+            move.disable()
+        if (move.name == 'Curse') & ((opp.type1 == "ghost") or (opp.type2 == "ghost")):
+            move.disable()
+    #Also disables hail/sand and brn damage
 
 def a_magma_armor   (pkmn, opp, env):
     if pkmn.status == 'frz':
@@ -224,8 +232,8 @@ def a_simple        (pkmn, opp, env):
 
 def a_skill_link    (pkmn, opp, env):
     for move in pkmn.moves:
-        if move.minHits == 2 and move.maxHits == 5:
-            move.minHits = 5
+        if move.minMaxHits[0] != move.minMaxHits[1]:
+            move.minMaxHits[0] = move.minMaxHits[1]
 
 def a_snow_cloak    (pkmn, opp, env):
     if env.weather == 'hail':
@@ -239,7 +247,7 @@ def a_solar_power   (pkmn, opp, env):
         pkmn.SPA.stageAdd(1)
 
 def a_solid_rock    (pkmn, opp, env):
-    opp.effs.superEff *= 0.75
+    opp.effs.SUPER *= 0.75
 
 def a_soundproof    (pkmn, opp, env):
     if not opp.breaksMold():
@@ -294,7 +302,7 @@ def a_thick_fat     (pkmn, opp, env):
     opp.typeMults.fire *= 0.5
 
 def a_tinted_lens   (pkmn, opp, env):
-    pkmn.effs.weak *= 2
+    pkmn.effs.WEAK *= 2
 
 def a_trace         (pkmn, opp, env): 
     if not opp.isUntraceable():

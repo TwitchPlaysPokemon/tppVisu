@@ -29,7 +29,7 @@ leeching = ['Drain Punch',
             'Giga Drain',
             'Mega Drain']
 
-selfdestructing = ['Explosion', 'Self-Destruct']
+selfdestructing = ['Explosion', 'Self-Destruct','Selfdestruct']
 
 lasting_two_turns = ['Fly',
                      'Giga Impact',

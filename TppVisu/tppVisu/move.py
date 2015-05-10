@@ -99,7 +99,7 @@ class Move(object):
                              'Lovely Kiss',
                              'Sing',
                              'Sleep Powder',
-                             'Sport',
+                             'Spore',
                              'Yawn']
     def isRecoilMove(self):
         return self.name in ['Brave Bird',
