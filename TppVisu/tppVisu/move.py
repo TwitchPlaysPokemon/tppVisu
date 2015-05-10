@@ -114,4 +114,35 @@ class Move(object):
                              'Volt Tackle',
                              'Wood Hammer',
                              'Wild Charge']
+        
+    def isOppStatLowering(self):
+        return self.name in ['Metal Sound',
+                             'Captivate',
+                             'Charm',
+                             'Cotton Spore',
+                             'Sand Attack',
+                             'Scary Face',
+                             'Screech',
+                             'Fake Tears',
+                             'Feather Dance',
+                             'Smokescreen',
+                             'Flash',
+                             'String Shot',
+                             'Growl',
+                             'Sweet Scent',
+                             'Tail Whip',
+                             'Tickle',
+                             'Kinesis',
+                             'Leer',
+                             'Memento']
+        
+    def isStatusConditionMove(self):
+        return self.name in ['Glare',
+                             'Poison Gas',
+                             'Poison Powder',
+                             'Stun Spore',
+                             'Thunder Wave',
+                             'Toxic',
+                             'Will-O-Wisp',
+                             'Yawn']
 

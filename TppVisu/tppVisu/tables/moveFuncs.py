@@ -44,6 +44,10 @@ def m_blizzard      (move, pkmn, opp, env, ovwr):
 def m_brine         (move, pkmn, opp, env, ovwr):
     return 'full health assumed'
         
+def m_captivate     (move, pkmn, opp, env, ovwr):
+    if pkmn.gender == Gender.none or opp.gender == Gender.none or pkmn.gender == opp.gender:
+        move.disable()
+        
 def m_crush_grip    (move, pkmn, opp, env, ovwr):
     ovwr.power = (1, 121)
     return 'the more HP the opponent has, the more damage does this move'

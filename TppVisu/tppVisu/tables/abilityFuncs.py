@@ -109,6 +109,20 @@ def a_hustle        (pkmn, opp, env):
     for move in pkmn.moves:
         if move.category == MoveCategory.physical:
             move.accuracy *= 0.8
+         
+def a_hydration     (pkmn, opp, env):
+    if env.weather == 'rain':
+        for move in opp.moves:
+            if move.isStatusConditionMove():
+                move.disable()
+            
+def a_hyper_cutter  (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Charm', 'Feather Dance', 'Growl']:
+            move.disable()
+    if pkmn.ATK.stage < 0:
+        pkmn.ATK.stage = 0
+    # Latter not 100% correct I believe.
 
 def a_immunity      (pkmn, opp, env):
     if pkmn.status == 'psn':
@@ -217,9 +231,9 @@ def a_sand_veil     (pkmn, opp, env):
     if env.weather == 'sandstorm':
         pkmn.EVA *= 1.2
 
-#def a_scrappy       (pkmn, opp, env):
-    # TODO make this
-    # Scrappy causes Ghost-type Pokémon to be hit by damage-dealing Normal- and Fighting-type moves inflicted by the user.
+def a_scrappy       (pkmn, opp, env):
+    if 'ghost' in [opp.type1, opp.type2]:
+        pkmn.effs.NOT = 1
 
 def a_simple        (pkmn, opp, env):
     pkmn.ATK.increment *= 2
@@ -232,8 +246,8 @@ def a_simple        (pkmn, opp, env):
 
 def a_skill_link    (pkmn, opp, env):
     for move in pkmn.moves:
-        if move.minMaxHits[0] != move.minMaxHits[1]:
-            move.minMaxHits[0] = move.minMaxHits[1]
+        if move.minMaxHits == (2, 5):
+            move.minMaxHits = (5, 5)
 
 def a_snow_cloak    (pkmn, opp, env):
     if env.weather == 'hail':
@@ -351,6 +365,12 @@ def a_water_veil    (pkmn, opp, env):
     if not opp.breaksMold() and pkmn.status == 'brn':
         pkmn.status = ''
     # latter propably not correctly implemented
+
+def a_white_smoke   (pkmn, opp, env):
+    if not opp.breaksMold():
+        for move in opp.moves:
+            if move.isOppStatLowering():
+                move.disable()
 
 def a_wonder_guard  (pkmn, opp, env):
     if not opp.breaksMold():

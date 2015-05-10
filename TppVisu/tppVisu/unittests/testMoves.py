@@ -216,7 +216,7 @@ class TppVisuMoveTests(unittest.TestCase):
         p2 = self.genPkmn(stats=self.genStats(DEF=173), type1='normal')
         dmg1 = self.getDamage(10, 190, 173, 2)[0]
         dmg2 = self.getDamage(10, 190, 173, 2)[1] + self.getDamage(20, 190, 173, 2)[1] + self.getDamage(30, 190, 173, 2)[1]
-        # TODO rounding errors occus
+        # TODO rounding error occurs
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, (dmg1, dmg2))
         
     def test_move_weather_ball(self):

@@ -199,11 +199,11 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_honey_gather(self):
         pass #useless
     def test_ability_huge_power(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="huge power")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="huge power",type1="fire")
         p.moves = [self.genMove(power=70,category=MoveCategory.physical),self.genMove(power=70,category=MoveCategory.special)]
         pdamage = calcSetup(p,self.genPkmn(),self.genEnv()).blues
         self.assertEqual(pdamage[0].damage, self.getDamage(70,100*2,100))
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100))
+        self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
     def test_ability_hustle(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="hustle")
         pass
@@ -222,7 +222,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         p2 = self.genPkmn(moves=[self.genMove(name="Growl"),self.genMove(name="Swagger")])
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
         self.assertNotEffective(attackdamage[0])
-        self.assertNormalEffective(attackdamage[0])
+        self.assertNormalEffective(attackdamage[1])
     def test_ability_ice_body(self):
         pass #Not visualizeable
     def test_ability_illuminate(self):
@@ -340,16 +340,16 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_pressure(self):
         pass # Not visualizeable, not to mention pretty much useless.
     def test_ability_pure_power(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="pure power", moves=[self.genMove(power=70)])
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="pure power", moves=[self.genMove(power=70)], type1="fire")
         pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100,2))
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,200,100))
     def test_ability_quick_feet(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="quick feet")
         pass
     def test_ability_rain_dish(self):
         pass #Not visualizeable; HP over time isn't implemented
     def test_ability_reckless(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="reckless")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="reckless",type1="fire")
         p.moves = [self.genMove(name="Flare Blitz",power=70),self.genMove(name="Tackle",power=70)]
         self.assertEqual(p.moves[0].isRecoilMove(),True)
         pdamage = calcSetup(p, self.genPkmn(), self.genEnv()).blues
@@ -411,10 +411,14 @@ class TppVisuAbilityTests(unittest.TestCase):
     def test_ability_skill_link(self):
         #This ability makes multi-hitting moves always hit 5 times.
         #This test assumes that normally, the least damage is calculated with 2 hits, and most is with 5.
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="skill link")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="skill link",type1="fire")
         m = self.genMove(name="Fury Swipes",power=18)
-        d1 = calcSetup(p,self.genPkmn(moves=[m]),self.genEnv()).blues
-        self.assertEqual(d1[0].damage, self.getDamage(18*5,100,100))
+        p.moves=[m]
+        d1 = calcSetup(p,self.genPkmn(),self.genEnv()).blues
+        # dmg is rounded after every step => sum single values
+        dmg = self.getDamage(18,100,100)
+        dmg = tuple(D * 5 for D in dmg)
+        self.assertEqual(d1[0].damage, dmg)
     def test_ability_slow_start(self):
         #p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="slow start")
         pass
@@ -433,7 +437,7 @@ class TppVisuAbilityTests(unittest.TestCase):
         pass
     def test_ability_solid_rock(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="solid rock",type1="grass",type2="bug")
-        attackingmon = self.genPkmn(stats=self.genStats(ATK=100))
+        attackingmon = self.genPkmn(stats=self.genStats(ATK=100), type1="ghost") # prevent STAB
         nveffective = self.genMove(type="water",power=70)
         fourxeffective = self.genMove(type="fire",power=70)
         supereffective = self.genMove(type="poison",power=70)

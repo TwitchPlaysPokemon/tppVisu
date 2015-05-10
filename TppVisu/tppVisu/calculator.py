@@ -97,18 +97,23 @@ def calcMove(move, pkmn, opp, env):
     
     PostModifier = getattr(pkmn.typeMults,move.type)
     
-    if TypeModifier == 0 or PostModifier == 0:
-        eff = Eff.NOT
+    if TypeModifier == 0:
         TypeModifier = pkmn.effs.NOT
     elif TypeModifier < 1:
-        eff = Eff.WEAK
         TypeModifier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
     elif TypeModifier > 1:
-        eff = Eff.SUPER
         TypeModifier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
     else:
-        eff = Eff.NORMAL
         TypeModifier *= pkmn.effs.NORMAL
+      
+    if TypeModifier == 0 or PostModifier == 0:
+        eff = Eff.NOT
+    elif TypeModifier < 1:
+        eff = Eff.WEAK
+    elif TypeModifier > 1:
+        eff = Eff.SUPER
+    else:
+        eff = Eff.NORMAL
     
     if move.isOHKOMove():
         return MoveResult(env, accu, pkmn.SPE.get(), kind=Kind.ohko, eff=eff)
