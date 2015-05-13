@@ -5,6 +5,15 @@ Created on 08.05.2015
 '''
 from tppVisu.calculator import calcSetup
 
+def buildDictMatch(blues, reds, env):
+    match = []
+    for i in range(len(blues)):
+        match.append([])
+        for j in range(len(reds)):
+            match[i].append(buildDictSetup(blues[i], reds[j], env))
+    return match
+            
+
 def buildDictSetup(blue, red, env):
     blues, reds, envOut = calcSetup(blue, red, env)
     setup = {}
