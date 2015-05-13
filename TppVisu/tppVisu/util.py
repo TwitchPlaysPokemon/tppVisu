@@ -2,6 +2,8 @@
 Created on 29.04.2015
 
 @author: Felk
+
+(non-categorized) utility-objects used for the visualizer. 
 '''
 from collections import namedtuple
 from enum import Enum

@@ -17,8 +17,12 @@ class MoveCategory(Enum):
     nonDamaging = 3
 
 class Move(object): 
+    '''class to represent a pokemon move, including all the needed data like type, category, power etc.'''
     def __init__(self, name, description, type, category, power, pp, accuracy):
-        self.name        = name.title() # First letters uppercase
+        '''name, description and type are strings.
+        categoryis an Enum, see above.
+        power, pp and accuracy are numbers.'''
+        self.name        = name.title() # First letters uppercase. Dirty fix. TODO Might not work for U-turn
         self.description = description
         self.type        = type
         self.category    = category
@@ -28,7 +32,8 @@ class Move(object):
         self.priority    = getPriority(self)
         self.visuable    = isVisuable(self)
         self.minMaxHits  = getMinMaxHits(self)
-        self.anomaly     = getAnomaly(self)
+        self.anomaly     = getAnomaly(self) # None, or a MoveAnomaly Enum, whose value is a message to be displayed.
+                                            # Can also be empty string for a regular "read description" notice.
        
     def disable(self):
         self.power = -1

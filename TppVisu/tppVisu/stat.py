@@ -5,10 +5,8 @@ Created on 29.04.2015
 '''
 
 class Stat(object):
-    '''
-    class for pokemon stats.
-    includes the base power, stages, and can calculate the final value.
-    '''
+    '''class for pokemon stats.
+    includes the base power, stages, and can calculate the final value.'''
     def __init__(self, base, stage=0):
         self.base = base
         self.stage = stage
@@ -31,6 +29,8 @@ class Stat(object):
         return self
         
 class StatAccEva(Stat):
+    '''same as Stat, but overwrites the multiplication table to be applicable for Accuracy and Evasion.
+    Don't use Stat for Accuracy and Evasion. Also don't use StatAccEva for atk, def, spa, spd or spe.'''
     def __init__(self, stage=0):
         super().__init__(1, stage)
         self.multTable = [33/100, 36/100, 43/100, 50/100, 60/100, 75/100, 100/100, 133/100, 166/100, 200/100, 250/100, 266/100, 300/100]

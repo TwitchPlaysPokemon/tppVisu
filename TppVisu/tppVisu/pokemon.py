@@ -15,7 +15,13 @@ class Gender(IntEnum):
     none = 2
 
 class Pokemon(object):
-    def __init__(self, natID, name, type1, type2, stats, moves, gender, ability, status='', statusVolatile='', happiness=0, level=100, weight=1, stages=Stages(0, 0, 0, 0, 0, 0, 0)):
+    '''class to represent a pokemon. Including all the needed data like types, moves, etc.'''
+    def __init__(self, natID, name, type1, type2, stats, moves, gender, ability='', status='', statusVolatile='', happiness=0, level=100, weight=1, stages=Stages(0, 0, 0, 0, 0, 0, 0)):
+        '''name, type1, type2, ability, status, statusVolatile are strings.
+        natID is a number.
+        stats is a Stats-namedtuple, see util.
+        gender is an enum, see above.
+        moves is an array of Move-objects, see module move.'''
         self.natID   = natID
         self.name    = name
         self.type1   = type1.lower() if type1 != None else None
