@@ -3,26 +3,43 @@ Created on 28.04.2015
 
 @author: Felk
 '''
-from enum import IntEnum
+from __future__ import division
 
-class Type(IntEnum):
-    normal   =  0
-    fire     =  1
-    water    =  2
-    electric =  3
-    grass    =  4
-    ice      =  5
-    fighting =  6
-    poison   =  7
-    ground   =  8
-    flying   =  9
-    psychic  = 10
-    bug      = 11
-    rock     = 12
-    ghost    = 13
-    dragon   = 14
-    dark     = 15
-    steel    = 16
+Types = {"normal"   :  0,
+         "fire"     :  1,
+         "water"    :  2,
+         "electric" :  3,
+         "grass"    :  4,
+         "ice"      :  5,
+         "fighting" :  6,
+         "poison"   :  7,
+         "ground"   :  8,
+         "flying"   :  9,
+         "psychic"  : 10,
+         "bug"      : 11,
+         "rock"     : 12,
+         "ghost"    : 13,
+         "dragon"   : 14,
+         "dark"     : 15,
+         "steel"    : 16}
+#class Type(IntEnum):
+#    normal   =  0
+#    fire     =  1
+#    water    =  2
+#    electric =  3
+#    grass    =  4
+#    ice      =  5
+#    fighting =  6
+#    poison   =  7
+#    ground   =  8
+#    flying   =  9
+#    psychic  = 10
+#    bug      = 11
+#    rock     = 12
+#    ghost    = 13
+#    dragon   = 14
+#    dark     = 15
+#    steel    = 16
 
 tableTypeEffs = [
     #                                     Defenders
@@ -47,6 +64,6 @@ tableTypeEffs = [
 ]
 
 def getEff(type1name, type2name):
-    type1 = Type[type1name]
-    type2 = Type[type2name]
+    type1 = Types[type1name]
+    type2 = Types[type2name]
     return tableTypeEffs[type1][type2]

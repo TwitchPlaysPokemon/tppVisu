@@ -3,40 +3,16 @@ Created on 28.04.2015
 
 @author: Felk
 '''
+from __future__ import division
 
 import unittest
 
-from tppVisu.move import MoveCategory, Move
-from tppVisu.pokemon import Pokemon, Gender
 from tppVisu.tables.typeEffs import getEff
-from tppVisu.util import Stats, Environment
+from tppVisu.unittests.visuUnittest import VisuTestCase
 
 
-class TppVisuMiscTests(unittest.TestCase):
+class TppVisuMiscTests(VisuTestCase):
     
-    def genStats(self, HP=100, ATK=100, DEF=100, SPA=100, SPD=100, SPE=100):
-        return Stats(HP, ATK, DEF, SPA, SPD, SPE)
-    
-    def genMove(self, name='Testmove', type='normal', category=MoveCategory.physical, power=100, pp=10, accuracy=100):
-        return Move(name, 'For unittests.', type, category, power, pp, accuracy)
-    
-    def genPkmn(self, name='Testpokemon', type1='normal', type2=None,
-                   stats=None,
-                   moves=None,
-                   gender=Gender.male,
-                   ability="Testability"):
-        return Pokemon(0, name, type1, type2,
-                       stats if stats != None else self.genStats(),
-                       moves if moves != None else [self.genMove()],
-                       gender, ability)
-        
-    def getDamage(self, power, ATK, DEF, mult=1):
-        dmg = ((210/250) * (ATK/DEF) * power + 2) * mult
-        return (dmg*0.85, dmg)
-        
-    def genEnv(self, weather='none'):
-        return Environment(weather)
-        
     def test_stats1(self):
         p = self.genPkmn(stats=self.genStats(HP=100, ATK=90, DEF=80, SPA=70, SPD=60, SPE=50))
         self.assertEqual(p.HP, 100)

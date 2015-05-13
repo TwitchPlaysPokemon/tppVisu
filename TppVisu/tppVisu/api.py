@@ -9,6 +9,8 @@ NOTE: Data like the ability-visuable-flag, move-anomaly-notices or move-prioriti
       They are inferred at Pokemon/Move-object-creation and available in those objects. They are not returned by calcSetup() or calcMove().
       They could be included here somewhere, but currently just aren't. They might also only be important for the Web-Version of the visualizer.
 '''
+from __future__ import division
+
 from tppVisu.calculator import calcSetup
 
 def buildDictMatch(blues, reds, env):
@@ -54,16 +56,16 @@ def buildDictSetup(blue, red, env):
     setup['red'] = []
     for b in blues:
         data = {}
-        data['kind'] = b.kind.value
-        data['eff'] = b.eff.value
+        data['kind'] = b.kind
+        data['eff'] = b.eff
         data['damage'] = b.damage
         data['accuracy'] = b.accuracy
         data['speed'] = b.speed
         setup['blue'].append(data)
     for r in reds:
         data = {}
-        data['kind'] = r.kind.value
-        data['eff'] = r.eff.value
+        data['kind'] = r.kind
+        data['eff'] = r.eff
         data['damage'] = r.damage
         data['accuracy'] = r.accuracy
         data['speed'] = r.speed

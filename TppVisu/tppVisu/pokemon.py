@@ -3,16 +3,18 @@ Created on 28.04.2015
 
 @author: Felk
 '''
-from enum import IntEnum
+from __future__ import division
+
 from tppVisu.stat import Stat, StatAccEva
-from tppVisu.util import Stages, TypeSet, Effs
+from tppVisu.util import Stages, TypeSet, Effs, enum
 from tppVisu.tables import abilityFuncs
 
 
-class Gender(IntEnum):
-    male = 0
-    female = 1
-    none = 2
+Gender = enum(male=0, female=1, none=2)
+#class Gender(IntEnum):
+#    male = 0
+#    female = 1
+#    none = 2
 
 class Pokemon(object):
     '''class to represent a pokemon. Including all the needed data like types, moves, etc.'''

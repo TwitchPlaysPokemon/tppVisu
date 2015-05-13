@@ -3,18 +3,20 @@ Created on 29.04.2015
 
 @author: Felk
 '''
-from enum import Enum
+from __future__ import division
 
 from tppVisu.tables.moveHits import getMinMaxHits
 from tppVisu.tables.movePriorities import getPriority
 from tppVisu.tables.moveVisuables import isVisuable
 from tppVisu.tables.moveAnomalies import getAnomaly
+from tppVisu.util import enum
 
 
-class MoveCategory(Enum):
-    physical = 1
-    special = 2
-    nonDamaging = 3
+MoveCategory = enum(physical=1, special=2, nonDamaging=3)
+#class MoveCategory(Enum):
+#    physical = 1
+#    special = 2
+#    nonDamaging = 3
 
 class Move(object): 
     '''class to represent a pokemon move, including all the needed data like type, category, power etc.'''

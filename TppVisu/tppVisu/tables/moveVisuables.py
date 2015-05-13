@@ -3,6 +3,7 @@ Created on 01.05.2015
 
 @author: Felk
 '''
+from __future__ import division
 
 tableNotVisuables = ['Bide',
                      'Counter',
