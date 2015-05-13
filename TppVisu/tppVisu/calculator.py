@@ -3,21 +3,21 @@ Created on 02.05.2015
 
 @author: Felk
 '''
-from enum import Enum
+from __future__ import division
 
 from tppVisu.move import MoveCategory
 from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
-from tppVisu.util import Eff
+from tppVisu.util import Eff, enum
 from copy import deepcopy
 from collections import namedtuple
 
-
-class Kind(Enum):
-    normal      = 'normal'
-    status      = 'status'
-    ohko        = 'ohko'
-    notVisuable = 'notVisuable'
+Kind = enum(normal='normal', status='status', ohko='ohko', notVisuable='notVisuable')
+#class Kind(Enum):
+#    normal      = 'normal'
+#    status      = 'status'
+#    ohko        = 'ohko'
+#    notVisuable = 'notVisuable'
 
 class MoveResult(object):
     def __init__(self, env, accuracy, speed, kind=Kind.normal, eff=Eff.NORMAL, damage=None):

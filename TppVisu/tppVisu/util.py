@@ -2,16 +2,22 @@
 Created on 29.04.2015
 
 @author: Felk
+
+(non-categorized) utilities and utility-objects used for the visualizer.
 '''
+from __future__ import division
+
 from collections import namedtuple
-from enum import Enum
 
+def enum(**enums):
+    return type('Enum', (), enums)
 
-class Eff(Enum):
-    NOT    = 'not'
-    WEAK   = 'weak'
-    NORMAL = 'normal'
-    SUPER  = 'super'
+Eff = enum(NOT='not', WEAK='weak', NORMAL='normal', SUPER='super')
+#class Eff(Enum):
+#    NOT    = 'not'
+#    WEAK   = 'weak'
+#    NORMAL = 'normal'
+#    SUPER  = 'super'
 
 class Effs(object):
     def __init__(self, SUPER, NORMAL, WEAK, NOT):

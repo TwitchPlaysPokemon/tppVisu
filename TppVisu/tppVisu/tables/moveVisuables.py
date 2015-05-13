@@ -3,6 +3,7 @@ Created on 01.05.2015
 
 @author: Felk
 '''
+from __future__ import division
 
 tableNotVisuables = ['Bide',
                      'Counter',
@@ -15,7 +16,8 @@ tableNotVisuables = ['Bide',
                      'Sleep Talk',
                      'Me First',
                      'Beat Up',
-                     'Metal Burst'
+                     'Metal Burst',
+                     'Doom Desire'
                     ]
 
 def isVisuable(move):

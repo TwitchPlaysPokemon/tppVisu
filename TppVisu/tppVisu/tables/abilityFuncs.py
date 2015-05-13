@@ -3,6 +3,8 @@ Created on 28.04.2015
 
 @author: Felk
 '''
+from __future__ import division
+
 from tppVisu.move import MoveCategory
 from tppVisu.tables.moveAnomalies import MoveAnomaly
 import tppVisu.pokemon
@@ -32,6 +34,12 @@ def a_adaptability  (pkmn, opp, env):
 
 def a_air_lock      (pkmn, opp, env):
     env.weather = 'none'
+
+def a_clear_body    (pkmn, opp, env):
+    if not opp.breaksMold():
+        for move in opp.moves:
+            if move.isOppStatLowering():
+                move.disable()
 
 def a_chlorophyll   (pkmn, opp, env):
     if env.weather == 'sun':
@@ -125,9 +133,11 @@ def a_hyper_cutter  (pkmn, opp, env):
     # Latter not 100% correct I believe.
 
 def a_immunity      (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Toxic', 'Poison Powder',"Poison Gas"]:
+            move.disable()
     if pkmn.status == 'psn':
         pkmn.status = ''
-    # propably not correctly implemented
     
 def a_insomnia      (pkmn, opp, env):
     if not opp.breaksMold():
@@ -173,7 +183,6 @@ def a_limber        (pkmn, opp, env):
         if move.name in ['Glare', 'Stun Spore', 'Thunder Wave']:
             move.disable()
             
-    
 def a_magic_guard   (pkmn, opp, env):
     for move in opp.moves:
         if move.name in ['Leech Seed', 'Toxic',"Will-o-Wisp"]:
@@ -200,6 +209,13 @@ def a_no_guard      (pkmn, opp, env):
 def a_normalize     (pkmn, opp, env):
     for move in pkmn.moves:
         move.type = 'normal'
+        
+def a_oblivious     (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Attract', 'Captivate']:
+            move.disable()
+    if pkmn.statusVolatile == 'infatuation':
+        pkmn.statusVolatile = ''
 
 def a_pure_power    (pkmn, opp, env):
     pkmn.ATK *= 2

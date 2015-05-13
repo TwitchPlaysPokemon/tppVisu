@@ -3,51 +3,16 @@ Created on 09.05.2015
 
 @author: Felk
 '''
+from __future__ import division
 
 import unittest
 
-from tppVisu.calculator import Eff, calcSetup, Kind
-from tppVisu.move import MoveCategory, Move
-from tppVisu.pokemon import Pokemon, Gender
-from tppVisu.util import Stats, Environment
+from tppVisu.calculator import calcSetup, Kind
+from tppVisu.pokemon import Gender
+from tppVisu.unittests.visuUnittest import VisuTestCase
 
 
-class TppVisuMoveTests(unittest.TestCase):
-    
-    def genStats(self, HP=100, ATK=100, DEF=100, SPA=100, SPD=100, SPE=100):
-        return Stats(HP, ATK, DEF, SPA, SPD, SPE)
-    
-    def genMove(self, name='Testmove', type='normal', category=MoveCategory.physical, power=100, pp=10, accuracy=100):
-        return Move(name, 'For unittests.', type, category, power, pp, accuracy)
-    
-    def genPkmn(self, name='Testpokemon', type1='normal', type2=None,
-                   stats=None,
-                   moves=None,
-                   gender=Gender.male,
-                   ability="Testability"):
-        return Pokemon(0, name, type1, type2,
-                       stats if stats != None else self.genStats(),
-                       moves if moves != None else [self.genMove()],
-                       gender, ability)
-        
-    def getDamage(self, power, ATK, DEF, mult=1):
-        dmg = ((210/250) * (ATK/DEF) * power + 2) * mult
-        return (int(dmg*0.85), int(dmg))
-     
-    def genEnv(self, weather='none'):
-        return Environment(weather)
-        
-    def assertNotEffective(self, result):
-        self.assertEqual(result.eff, Eff.NOT)
-        
-    def assertWeakEffective(self, result):
-        self.assertEqual(result.eff, Eff.WEAK)
-        
-    def assertNormalEffective(self, result):
-        self.assertEqual(result.eff, Eff.NORMAL)
-        
-    def assertSuperEffective(self, result):
-        self.assertEqual(result.eff, Eff.SUPER)
+class TppVisuMoveTests(VisuTestCase):
     
     def test_move_arm_thrust(self):
         p1 = self.genPkmn(stats=self.genStats(ATK=332), type1="dragon", moves=[self.genMove(name='Arm Thrust', power=15)]) # no stab
@@ -55,7 +20,6 @@ class TppVisuMoveTests(unittest.TestCase):
         dmg1 = self.getDamage(15, 332, 223)[0] * 2
         dmg2 = self.getDamage(15, 332, 223)[1] * 5
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, (dmg1, dmg2))
-        
         
     def test_move_attract(self):
         p1 = self.genPkmn(gender=Gender.male, moves=[self.genMove(name='Attract')])

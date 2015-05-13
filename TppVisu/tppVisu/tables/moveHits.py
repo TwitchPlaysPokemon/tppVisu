@@ -3,6 +3,7 @@ Created on 28.04.2015
 
 @author: Felk
 '''
+from __future__ import division
 
 tableMoveHits = {
     'Arm Thrust'  : (2, 5),

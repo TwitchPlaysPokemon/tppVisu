@@ -30,8 +30,7 @@ class TppVisuAbilityTests(VisuTestCase):
         p2.moves = [self.genMove(name="Rain Dance")]
         pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
         
-        
-       # NOTE I read that Air Lock does only negate the effects, but these attacks would still work, right? (same as Cloud Nine)
+        # NOTE I read that Air Lock does only negate the effects, but these attacks would still work, right? (same as cloud none)
         self.assertNotEffective(attackdamage[0])
         self.assertEqual(env.weather,"none") #maybe not technically correct, but close enough
 
@@ -68,7 +67,6 @@ class TppVisuAbilityTests(VisuTestCase):
         p2 = self.genPkmn()
         p2.moves = [self.genMove(name="Rain Dance")]
         pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
-        
         
         # NOTE I read that Cloud Nine does only negate the effects, but these attacks would still work, right? (same as Air Lock)
         self.assertNotEffective(attackdamage[0])
@@ -137,7 +135,9 @@ class TppVisuAbilityTests(VisuTestCase):
         pass #Not visualizeable
     def test_ability_filter(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="filter",type1="grass",type2="bug")
-        attackingmon = self.genPkmn(stats=self.genStats(ATK=100),type1="dragon")
+
+        attackingmon = self.genPkmn(stats=self.genStats(ATK=100), type1='dragon') # prevent STAB
+        
         nveffective = self.genMove(type="water",power=70)
         fourxeffective = self.genMove(type="fire",power=70)
         supereffective = self.genMove(type="poison",power=70)
@@ -266,11 +266,11 @@ class TppVisuAbilityTests(VisuTestCase):
         p2 = self.genPkmn(moves=[self.genMove(name="Thunder Wave"),self.genMove(name="Yawn"),self.genMove(name="Toxic")])
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
         for atk in attackdamage:
-          self.assertNormalEffective(atk)
+            self.assertNormalEffective(atk)
         
         attackdamage = calcSetup(p, p2, self.genEnv(weather="sun")).reds
         for atk in attackdamage:
-          self.assertNotEffective(atk)
+            self.assertNotEffective(atk)
     def test_ability_levitate(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="levitate")
         attackingmon = self.genPkmn(stats=self.genStats(ATK=100))
@@ -301,7 +301,7 @@ class TppVisuAbilityTests(VisuTestCase):
         p2 = self.genPkmn(moves=[self.genMove(name="Toxic"),self.genMove(name="Curse"),self.genMove(name="Leech Seed")],type1="ghost")
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
         for attack in attackdamage:
-          self.assertNotEffective(attack)
+            self.assertNotEffective(attack)
     def test_ability_magma_armor(self):
         pass #Not visualizeable; it won't actually disable any moves since there's no Toxic for frz
     def test_ability_magnet_pull(self):
@@ -572,6 +572,7 @@ class TppVisuAbilityTests(VisuTestCase):
     def test_ability_tinted_lens(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="tinted lens",type1="dragon") # prevent STAB)
         p2 = self.genPkmn(stats=self.genStats(DEF=100),type1="steel",type2="flying")
+        
         nveffective = self.genMove(type="steel",power=70)
         fourxneffective = self.genMove(type="bug",power=70)
         normaleffective = self.genMove(type="normal",power=70)
@@ -609,10 +610,10 @@ class TppVisuAbilityTests(VisuTestCase):
         #Test #4: Tracing Trace doesn't cause an infinite loop of death
         tracimon = self.genPkmn(ability="technician")
         try:
-          calcSetup(p,tracimon,self.genEnv()).blues
+            calcSetup(p,tracimon,self.genEnv()).blues
         except RuntimeError as e:
-          #oops
-          self.assertIsNone(e)
+            #oops
+            self.assertIsNone(e)
     def test_ability_truant(self):
         pass #Not visualizeable; how do you visualize not attacking every other turn?
     def test_ability_unaware(self):
@@ -695,4 +696,3 @@ class TppVisuAbilityTests(VisuTestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    
