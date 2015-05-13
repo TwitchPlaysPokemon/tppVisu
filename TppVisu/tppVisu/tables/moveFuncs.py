@@ -47,21 +47,12 @@ def m_crush_grip    (move, pkmn, opp, env, ovwr):
 def m_dragon_rage   (move, pkmn, opp, env, ovwr):
     ovwr.damage = (40, 40)
     
-def m_dream_eater   (move, pkmn, opp, env, ovwr):
-    # Could get handled with status conditions, but manipulating them is not/poorly available.
-    # Just display the potential damage for convenience.
-    pass
-    
 def m_explosion     (move, pkmn, opp, env, ovwr):
     move.power *= 2
     
 def m_facade        (move, pkmn, opp, env, ovwr):
     if pkmn.hasStatusCondition():
         move.power *= 2
-    
-def m_false_swipe   (move, pkmn, opp, env, ovwr):
-    # always keeps 1HP
-    pass
     
 def m_flail         (move, pkmn, opp, env, ovwr):
     ovwr.power = (20, 200)
@@ -75,14 +66,6 @@ def m_frustration   (move, pkmn, opp, env, ovwr):
     move.power = (255 - pkmn.happiness) / 2.5
     if move.power == 0:
         move.power = 1
-        
-def m_fury_cutter   (move, pkmn, opp, env, ovwr):
-    # first turn displayed
-    pass
-        
-def m_future_sight  (move, pkmn, opp, env, ovwr):
-    # Attacks 2 turns later
-    pass
         
 def m_grass_knot    (move, pkmn, opp, env, ovwr):
     if opp.weight < 0.1:
@@ -155,10 +138,6 @@ def m_reversal      (move, pkmn, opp, env, ovwr):
     # Does more damage as the user's HP decreases
     ovwr.power = (20, 200)
 
-def m_rollout       (move, pkmn, opp, env, ovwr):
-    # first turn displayed
-    pass
-    
 def m_secret_power  (move, pkmn, opp, env, ovwr):
     pass
     # TODO maybe somewhen terrain will be implemented...
@@ -195,11 +174,6 @@ def m_trump_card    (move, pkmn, opp, env, ovwr):
     # power increases as PP decreases
     ovwr.power = (40, 200)
    
-def m_wake_up_slap  (move, pkmn, opp, env, ovwr):
-    # TODO base power doubles if used on a sleeping target. Wakes up
-    # not handled with status conditions. Same reason as for Dream Eater, for convenience
-    pass
-    
 def m_weather_ball  (move, pkmn, opp, env, ovwr):
     if env.weather != 'none':
         move.power *= 2
