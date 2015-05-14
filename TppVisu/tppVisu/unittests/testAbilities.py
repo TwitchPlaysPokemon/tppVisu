@@ -310,13 +310,13 @@ class TppVisuAbilityTests(VisuTestCase):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="marvel scale",type1="dragon")
         p2 = self.genPkmn(moves=[self.genMove(name="Tackle",power=70)])
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
-        self.assertEqual(attackdamage[0].damage,self.genPkmn(70,100,100))
+        self.assertEqual(attackdamage[0].damage,self.getDamage(70,100,100))
         
         p.status = "psn"
         self.assertEqual(p.hasStatusCondition(),True)
         
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
-        self.assertEqual(attackdamage[0].damage,self.genPkmn(70,100,100*2))
+        self.assertEqual(attackdamage[0].damage,self.getDamage(70,100,100*2))
     def test_ability_mold_breaker(self):
         pass # It's worked into everyone else's tests
     def test_ability_motor_drive(self):
@@ -587,7 +587,7 @@ class TppVisuAbilityTests(VisuTestCase):
     def test_ability_trace(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="trace",type1="normal")
         #Test #1: Wonder Guard
-        wondermon = self.genPkmn(ability="wonder guard",moves=self.genMove(type="normal"),self.genMove(type="fighting"))
+        wondermon = self.genPkmn(ability="wonder guard",moves=[self.genMove(type="normal"),self.genMove(type="fighting")])
         
         attackdamages = calcSetup(p,wondermon,self.genEnv()).reds
         self.assertNotEffective(attackdamages[0])
