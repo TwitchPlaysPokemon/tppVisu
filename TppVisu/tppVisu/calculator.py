@@ -60,6 +60,21 @@ def calcMove(move, pkmn, opp, env):
     if not move.visuable:
         return MoveResult(env, move.accuracy, pkmn.SPE.get(), kind=Kind.notVisuable)
     
+    #weather effects
+    for mon in [pkmn,opp]:
+        if env.weather == "sun":
+            mon.typeMults.fire *= 2
+            mon.typeMults.water /= 2
+        if env.weather == "rain":
+            mon.typeMults.fire /= 2
+            mon.typeMults.water *= 2
+        if env.weather == "sandstorm":
+            if "rock" in [mon.type1,mon.type2]:
+                mon.SPD *= 1.5
+    if env.weather == "fog":
+        if move.accuracy != None: move.accuracy *= 6.0/10
+        #Hail doesn't change any stats or anything
+    
     # calculate final accuracy
     accu = None
     if move.accuracy != None and move.accuracy >= 0: accu = move.accuracy * (pkmn.ACC.get() / opp.EVA.get())
@@ -92,25 +107,27 @@ def calcMove(move, pkmn, opp, env):
     if pkmn.type1 == move.type: StabModifier *= pkmn.stab
     if pkmn.type2 == move.type: StabModifier *= pkmn.stab
     
-    TypeModifier = getEff(move.type, opp.type1)
-    if opp.type2: TypeModifier *= getEff(move.type, opp.type2)
+    ChangedMultMultiplier = getEff(move.type, opp.type1)
+    if opp.type2: ChangedMultMultiplier *= getEff(move.type, opp.type2)
     
-    PostModifier = getattr(pkmn.typeMults,move.type)
+    TypeModifier = getattr(pkmn.typeMults,move.type)
     
-    if TypeModifier == 0:
-        TypeModifier = pkmn.effs.NOT
-    elif TypeModifier < 1:
-        TypeModifier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
-    elif TypeModifier > 1:
-        TypeModifier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
+    
+    
+    if ChangedMultMultiplier == 0:
+        ChangedMultMultiplier = pkmn.effs.NOT
+    elif ChangedMultMultiplier < 1:
+        ChangedMultMultiplier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
+    elif ChangedMultMultiplier > 1:
+        ChangedMultMultiplier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
     else:
-        TypeModifier *= pkmn.effs.NORMAL
+        ChangedMultMultiplier *= pkmn.effs.NORMAL
       
-    if TypeModifier == 0 or PostModifier == 0:
+    if ChangedMultMultiplier == 0 or TypeModifier == 0:
         eff = Eff.NOT
-    elif TypeModifier < 1:
+    elif ChangedMultMultiplier < 1:
         eff = Eff.WEAK
-    elif TypeModifier > 1:
+    elif ChangedMultMultiplier > 1:
         eff = Eff.SUPER
     else:
         eff = Eff.NORMAL
@@ -120,7 +137,7 @@ def calcMove(move, pkmn, opp, env):
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
-    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * StabModifier * TypeModifier * PostModifier
+    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * StabModifier * ChangedMultMultiplier * TypeModifier
     predamage = tuple(calcSetup(P) for P in power)
     
     # BRN attack nerf
