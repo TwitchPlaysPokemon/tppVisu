@@ -28,7 +28,7 @@ class TppVisuAbilityTests(VisuTestCase):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="air lock")
         p2 = self.genPkmn()
         p2.moves = [self.genMove(name="Rain Dance")]
-        pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
+        pdamage,attackdamage, env = calcSetup(p,p2,self.genEnv(weather="Rain"))
         
         # NOTE I read that Air Lock does only negate the effects, but these attacks would still work, right? (same as cloud none)
         self.assertNotEffective(attackdamage[0])
@@ -66,7 +66,7 @@ class TppVisuAbilityTests(VisuTestCase):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="cloud nine")
         p2 = self.genPkmn()
         p2.moves = [self.genMove(name="Rain Dance")]
-        pdamage,attackdamage, env = calcSetup(p,self.genPkmn(),self.genEnv(weather="Rain"))
+        pdamage,attackdamage, env = calcSetup(p,p2,self.genEnv(weather="Rain"))
         
         # NOTE I read that Cloud Nine does only negate the effects, but these attacks would still work, right? (same as Air Lock)
         self.assertNotEffective(attackdamage[0])
@@ -92,7 +92,7 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertNormalEffective(d2[1])
         #It also prevents aftermath, but we can't test for that
     def test_ability_download(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="download")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="download",type1="dragon")
         p.moves = [self.genMove(power=70,category=MoveCategory.physical),self.genMove(power=70,category=MoveCategory.special)]
  
         #SPD lower: SPA raised to *1.5
@@ -157,8 +157,8 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertNotEffective(calcSetup(attackingmon,p,self.genEnv()).blues[0])
         #after this, fire attacks are 1.5x, but this isn't visualizable
     def test_ability_flower_gift(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="flower gift",moves=[self.genMove(power=70,category=MoveCategory.physical)])
-        p2 = self.genPkmn(moves=[self.genMove(power=70,category=MoveCategory.special)])
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="flower gift",moves=[self.genMove(power=70,category=MoveCategory.physical)],type1="dragon")
+        p2 = self.genPkmn(moves=[self.genMove(power=70,category=MoveCategory.special)],type1="dragon")
         pdamage,attackdamage,env = calcSetup(p,p2,self.genEnv())
         self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100))
         self.assertEqual(attackdamage[0].damage, self.getDamage(70,100,100))
@@ -175,15 +175,15 @@ class TppVisuAbilityTests(VisuTestCase):
     def test_ability_gluttony(self):
         pass #Not visualizeable; This is PBR; nobody's holding berries
     def test_ability_guts(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="guts",moves=[self.genMove(power=70)])
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="guts",moves=[self.genMove(power=70)],type1="dragon")
         self.assertEqual(p.hasStatusCondition(),False)
         pdamage = calcSetup(p,self.genPkmn(),self.genEnv()).blues
-        self.assertEqual(pdamage,self.getDamage(70,100,100))
+        self.assertEqual(pdamage[0].damage,self.getDamage(70,100,100))
         
         p.status = "brn"
         self.assertEqual(p.hasStatusCondition(),True)
         pdamage = calcSetup(p,self.genPkmn(),self.genEnv()).blues
-        self.assertEqual(pdamage,self.getDamage(70,100*1.5,100)) #No attack drop from burn
+        self.assertEqual(pdamage[0].damage,self.getDamage(70,100*1.5,100)) #No attack drop from burn
         
     def test_ability_heatproof(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="heatproof")
@@ -200,10 +200,10 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertEqual(pdamage[0].damage, self.getDamage(70,100*2,100))
         self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100))
     def test_ability_hustle(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="hustle",type1="fire")
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="hustle",type1="dragon")
         p.moves = [self.genMove(power=70,category=MoveCategory.physical,accuracy=100),self.genMove(power=70,category=MoveCategory.special,accuracy=100)]
         pdamage = calcSetup(p,self.genPkmn(),self.genEnv()).blues
-        self.assertEqual(pdamage[0].damage, self.getDamage(70,100*2,100))
+        self.assertEqual(pdamage[0].damage, self.getDamage(70,100*1.5,100))
         self.assertEqual(pdamage[0].accuracy, 100*0.8)
         self.assertEqual(pdamage[1].damage, self.getDamage(70,100,100)) #spatk isnt boosted
         self.assertEqual(pdamage[1].accuracy, 100)
@@ -307,8 +307,8 @@ class TppVisuAbilityTests(VisuTestCase):
     def test_ability_magnet_pull(self):
         pass #this only affects trainer switches; which we don't have in PBR.
     def test_ability_marvel_scale(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="marvel scale",type1="dragon")
-        p2 = self.genPkmn(moves=[self.genMove(name="Tackle",power=70)])
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="marvel scale")
+        p2 = self.genPkmn(moves=[self.genMove(name="Tackle",power=70)],type1="dragon")
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
         self.assertEqual(attackdamage[0].damage,self.getDamage(70,100,100))
         
@@ -316,7 +316,7 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertEqual(p.hasStatusCondition(),True)
         
         attackdamage = calcSetup(p, p2, self.genEnv()).reds
-        self.assertEqual(attackdamage[0].damage,self.getDamage(70,100,100*2))
+        self.assertEqual(attackdamage[0].damage,self.getDamage(70,100,100*1.5))
     def test_ability_mold_breaker(self):
         pass # It's worked into everyone else's tests
     def test_ability_motor_drive(self):
@@ -345,7 +345,7 @@ class TppVisuAbilityTests(VisuTestCase):
         #Test for STAB; the move remains a fire-type move
         p3 = self.genPkmn(type1="fire")
         pdamage = calcSetup(p,p3,self.genEnv()).blues
-        self.assertEqual(pdamage[0],self.getDamage(70*1.5,100,100))
+        self.assertEqual(pdamage[0].damage,self.getDamage(70,100,100,1.5))
     def test_ability_oblivious(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="oblivious",gender=Gender.male)
         p2 = self.genPkmn(moves=[self.genMove(name="attract")],gender=Gender.female)
@@ -414,8 +414,8 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertEqual(attackdamage[1].accuracy,50)
         
         attackdamage = calcSetup(p,p2,self.genEnv(weather="sandstorm")).reds
-        self.assertEqual(attackdamage[0].accuracy,100 * 0.8)
-        self.assertEqual(attackdamage[1].accuracy,50 * 0.8)
+        self.assertEqual(attackdamage[0].accuracy, int(100 * 1/(1.2)))
+        self.assertEqual(attackdamage[1].accuracy, int(50 * 1/(1.2)))
     def test_ability_scrappy(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="scrappy",type1="ghost")
         p2 = self.genPkmn(type1="ghost")
@@ -462,15 +462,15 @@ class TppVisuAbilityTests(VisuTestCase):
         self.assertEqual(attackdamage[1].accuracy,50)
         
         attackdamage = calcSetup(p,p2,self.genEnv(weather="hail")).reds
-        self.assertEqual(attackdamage[0].accuracy,100 * 0.8)
-        self.assertEqual(attackdamage[1].accuracy,50 * 0.8)
+        self.assertEqual(attackdamage[0].accuracy, int(100 * 1/(1.2)))
+        self.assertEqual(attackdamage[1].accuracy, int(50 * 1/(1.2)))
     def test_ability_snow_warning(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="snow warning")
         env = calcSetup(p,self.genPkmn(),self.genEnv()).env
         
         self.assertEqual(env.weather,"hail")
     def test_ability_solar_power(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="solar power",moves=[self.genMove(power=70,category=MoveCategory.special)])
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="solar power",moves=[self.genMove(power=70,category=MoveCategory.special)],type1="dragon")
         p2 = self.genPkmn()
         pdamage = calcSetup(p,p2,self.genEnv()).blues
         self.assertEqual(pdamage[0].damage, self.getDamage(70,100,100))
@@ -548,14 +548,14 @@ class TppVisuAbilityTests(VisuTestCase):
     def test_ability_tangled_feet(self):
         pass # Not visualizeable; raises evasion when confused
     def test_ability_technician(self):
-        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="technician")
-        attackingmon = self.genPkmn(stats=self.genStats(ATK=100))
-        attackingmon.moves=[self.genMove(power=50),self.genMove(power=60),self.genMove(power=70)]
+        p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="technician",type1="dragon")
+        p2 = self.genPkmn(stats=self.genStats(ATK=100))
+        p.moves=[self.genMove(power=50),self.genMove(power=60),self.genMove(power=70)]
         
-        attackdamages = calcSetup(attackingmon,p,self.genEnv()).blues
-        self.assertEqual(attackdamages[0].damage, self.getDamage(50*1.5,100,100)) # rounding errors? Should not happen, weird
-        self.assertEqual(attackdamages[1].damage, self.getDamage(60*1.5,100,100))
-        self.assertEqual(attackdamages[2].damage, self.getDamage(70,100,100))
+        pdamages = calcSetup(p,p2,self.genEnv()).blues
+        self.assertEqual(pdamages[0].damage, self.getDamage(50*1.5,100,100)) # rounding errors? Should not happen, weird
+        self.assertEqual(pdamages[1].damage, self.getDamage(60*1.5,100,100))
+        self.assertEqual(pdamages[2].damage, self.getDamage(70,100,100))
     def test_ability_thick_fat(self):
         p = self.genPkmn(stats=self.genStats(ATK=100, DEF=100),ability="thick fat")
         attackingmon = self.genPkmn(stats=self.genStats(ATK=100))
@@ -602,6 +602,7 @@ class TppVisuAbilityTests(VisuTestCase):
         technimon = self.genPkmn(ability="technician")
         p.moves=[self.genMove(power=50),self.genMove(power=60),self.genMove(power=70)]
         
+        p.type1="fire" #avoid STAB
         pdamages = calcSetup(p,technimon,self.genEnv()).blues
         self.assertEqual(pdamages[0].damage, self.getDamage(50*1.5,100,100))
         self.assertEqual(pdamages[1].damage, self.getDamage(60*1.5,100,100))

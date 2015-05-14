@@ -34,6 +34,9 @@ def a_adaptability  (pkmn, opp, env):
 
 def a_air_lock      (pkmn, opp, env):
     env.weather = 'none'
+    for move in opp.moves:
+        if move.isWeatherChangingMove():
+            move.disable()
 
 def a_clear_body    (pkmn, opp, env):
     if not opp.breaksMold():
@@ -47,7 +50,9 @@ def a_chlorophyll   (pkmn, opp, env):
     
 def a_cloud_nine    (pkmn, opp, env):
     env.weather = 'none'
-
+    for move in opp.moves:
+        if move.isWeatherChangingMove():
+            move.disable()
 def a_compound_eyes (pkmn, opp, env):
     for move in pkmn.moves:
         move.accuracy *= 1.3;
@@ -164,6 +169,9 @@ def a_keen_eye      (pkmn, opp, env):
 def a_leaf_guard    (pkmn, opp, env):
     if env.weather == 'sun':
         pkmn.status = ''
+        for move in opp.moves:
+            if move.isStatusConditionMove():
+                move.disable()
     # TODO check for moves that are 'not effective' now
 
 def a_levitate      (pkmn, opp, env):
@@ -213,6 +221,13 @@ def a_normalize     (pkmn, opp, env):
 def a_oblivious     (pkmn, opp, env):
     for move in opp.moves:
         if move.name in ['Attract', 'Captivate']:
+            move.disable()
+    if pkmn.statusVolatile == 'infatuation':
+        pkmn.statusVolatile = ''
+
+def a_own_tempo     (pkmn, opp, env):
+    for move in opp.moves:
+        if move.name in ['Confuse Ray', 'Supersonic','Sweet Kiss','Teeter Dance']:
             move.disable()
     if pkmn.statusVolatile == 'infatuation':
         pkmn.statusVolatile = ''

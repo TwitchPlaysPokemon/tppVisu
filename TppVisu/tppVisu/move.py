@@ -152,4 +152,9 @@ class Move(object):
                              'Toxic',
                              'Will-O-Wisp',
                              'Yawn']
+    def isWeatherChangingMove(self):
+        return self.name in ['Sunny Day',
+                             'Rain Dance',
+                             'Sandstorm',
+                             'Hail']
 
