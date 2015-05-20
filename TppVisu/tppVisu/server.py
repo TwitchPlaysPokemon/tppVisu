@@ -29,7 +29,7 @@ Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: application/json
 
-"""+json.dumps(result, indent='    ').encode('ascii'))
+"""+json.dumps(result, indent=4).encode('ascii')) # For Python3: indent='    ' or something.
     else:
         sock.sendall(b"""HTTP/1.1 404 Not Found
 Connection: close
