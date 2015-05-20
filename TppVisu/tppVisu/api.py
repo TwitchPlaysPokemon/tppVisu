@@ -13,7 +13,7 @@ NOTE: Data like the ability-visuable-flag, move-anomaly-notices or move-prioriti
 
 
 
-from __future__ import division
+from __future__ import division, print_function
 
 from tppVisu.calculator import calcSetup
 

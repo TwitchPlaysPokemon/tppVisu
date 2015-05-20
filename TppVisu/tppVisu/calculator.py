@@ -85,7 +85,6 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        print(move.name + 'is disabled')
         return MoveResult(env, accu, pkmn.SPE.get(), eff=Eff.NOT)
     
     ##########################################################

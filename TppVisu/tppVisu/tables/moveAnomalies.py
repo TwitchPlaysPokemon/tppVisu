@@ -5,7 +5,7 @@ Created on 08.05.2015
 
 This module is needed to infer move-notice-strings for moves with notable anomalous behaviours at Move-object-creation.
 '''
-from __future__ import division
+from __future__ import division, print_function
 
 from tppVisu.util import enum
 

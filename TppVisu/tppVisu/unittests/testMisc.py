@@ -4,7 +4,7 @@ Created on 28.04.2015
 @author: Felk
 '''
 
-from __future__ import division
+from __future__ import division, print_function
 
 import unittest
 

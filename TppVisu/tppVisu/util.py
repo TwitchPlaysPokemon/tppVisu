@@ -5,9 +5,10 @@ Created on 29.04.2015
 
 (non-categorized) utilities and utility-objects used for the visualizer.
 '''
-from __future__ import division
+from __future__ import division, print_function
 
 from collections import namedtuple
+
 
 def enum(**enums):
     return type('Enum', (), enums)

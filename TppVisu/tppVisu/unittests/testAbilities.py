@@ -3,7 +3,7 @@ Created on 05.07.14
 
 @author: Hlixed
 '''
-from __future__ import division
+from __future__ import division, print_function
 
 import unittest
 

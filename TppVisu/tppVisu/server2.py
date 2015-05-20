@@ -3,6 +3,7 @@ Created on 11.05.2015
 
 @author: Felk
 '''
+from __future__ import division, print_function
 
 import json
 import re
