@@ -3,7 +3,7 @@ Created on 02.05.2015
 
 @author: Felk
 '''
-from __future__ import division
+from __future__ import division, print_function
 
 from collections import namedtuple
 from copy import deepcopy
@@ -85,7 +85,7 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
-        print move.name, 'is disabled'
+        print(move.name + 'is disabled')
         return MoveResult(env, accu, pkmn.SPE.get(), eff=Eff.NOT)
     
     ##########################################################
