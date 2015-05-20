@@ -6,8 +6,9 @@ Created on 28.04.2015
 from __future__ import division
 
 from tppVisu.move import MoveCategory
-from tppVisu.tables.moveAnomalies import MoveAnomaly
 import tppVisu.pokemon
+from tppVisu.tables.moveAnomalies import MoveAnomaly
+
 
 def call(abilityName, pkmn, opp, env):
     funcname = 'a_' + abilityName.lower().replace(' ', '_')
@@ -139,7 +140,7 @@ def a_hyper_cutter  (pkmn, opp, env):
 
 def a_immunity      (pkmn, opp, env):
     for move in opp.moves:
-        if move.name in ['Toxic', 'Poison Powder',"Poison Gas"]:
+        if move.name in ['Toxic', 'Poison Powder', 'Poison Gas']:
             move.disable()
     if pkmn.status == 'psn':
         pkmn.status = ''
@@ -193,11 +194,11 @@ def a_limber        (pkmn, opp, env):
             
 def a_magic_guard   (pkmn, opp, env):
     for move in opp.moves:
-        if move.name in ['Leech Seed', 'Toxic',"Will-o-Wisp"]:
+        if move.name in ['Leech Seed', 'Toxic', 'Will-o-Wisp']:
             move.disable()
-        if (move.name == 'Curse') & ((opp.type1 == "ghost") or (opp.type2 == "ghost")):
+        if (move.name == 'Curse') & ((opp.type1 == 'ghost') or (opp.type2 == 'ghost')):
             move.disable()
-    #Also disables hail/sand and brn damage
+    # Also disables hail/sand and brn damage
 
 def a_magma_armor   (pkmn, opp, env):
     if pkmn.status == 'frz':
@@ -227,7 +228,7 @@ def a_oblivious     (pkmn, opp, env):
 
 def a_own_tempo     (pkmn, opp, env):
     for move in opp.moves:
-        if move.name in ['Confuse Ray', 'Supersonic','Sweet Kiss','Teeter Dance']:
+        if move.name in ['Confuse Ray', 'Supersonic', 'Sweet Kiss', 'Teeter Dance']:
             move.disable()
     if pkmn.statusVolatile == 'infatuation':
         pkmn.statusVolatile = ''

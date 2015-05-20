@@ -22,8 +22,9 @@ class VisuTestCase(unittest.TestCase):
                    stats=None,
                    moves=None,
                    gender=Gender.male,
-                   ability="Testability"):
-        return Pokemon(0, name, type1, type2,
+                   ability="Testability",
+                   id=0):
+        return Pokemon(id, name, type1, type2,
                        stats if stats != None else self.genStats(),
                        moves if moves != None else [self.genMove()],
                        gender, ability)

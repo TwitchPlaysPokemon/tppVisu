@@ -13,11 +13,6 @@ from copy import deepcopy
 from collections import namedtuple
 
 Kind = enum(normal='normal', status='status', ohko='ohko', notVisuable='notVisuable')
-#class Kind(Enum):
-#    normal      = 'normal'
-#    status      = 'status'
-#    ohko        = 'ohko'
-#    notVisuable = 'notVisuable'
 
 class MoveResult(object):
     def __init__(self, env, accuracy, speed, kind=Kind.normal, eff=Eff.NORMAL, damage=None):
@@ -88,6 +83,7 @@ def calcMove(move, pkmn, opp, env):
         if accu < 30: move.disable()
         
     if move.isDisabled():
+        print move.name, 'is disabled'
         return MoveResult(env, accu, pkmn.SPE.get(), eff=Eff.NOT)
     
     ##########################################################
@@ -104,31 +100,29 @@ def calcMove(move, pkmn, opp, env):
     else:
         valueAtkDef = pkmn.SPA.get() / opp.SPD.get()
         
-    StabModifier = 1
-    if pkmn.type1 == move.type: StabModifier *= pkmn.stab
-    if pkmn.type2 == move.type: StabModifier *= pkmn.stab
+    stabModifier = 1
+    if pkmn.type1 == move.type: stabModifier *= pkmn.stab
+    if pkmn.type2 == move.type: stabModifier *= pkmn.stab
     
-    ChangedMultMultiplier = getEff(move.type, opp.type1)
-    if opp.type2: ChangedMultMultiplier *= getEff(move.type, opp.type2)
+    effModifier = getEff(move.type, opp.type1)
+    if opp.type2: effModifier *= getEff(move.type, opp.type2)
     
-    TypeModifier = getattr(pkmn.typeMults,move.type)
+    typeModifier = getattr(pkmn.typeMults, move.type)
     
-    
-    
-    if ChangedMultMultiplier == 0:
-        ChangedMultMultiplier = pkmn.effs.NOT
-    elif ChangedMultMultiplier < 1:
-        ChangedMultMultiplier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
-    elif ChangedMultMultiplier > 1:
-        ChangedMultMultiplier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
+    if effModifier == 0:
+        effModifier = pkmn.effs.NOT
+    elif effModifier < 1:
+        effModifier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
+    elif effModifier > 1:
+        effModifier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
     else:
-        ChangedMultMultiplier *= pkmn.effs.NORMAL
+        effModifier *= pkmn.effs.NORMAL
       
-    if ChangedMultMultiplier == 0 or TypeModifier == 0:
+    if effModifier == 0 or typeModifier == 0:
         eff = Eff.NOT
-    elif ChangedMultMultiplier < 1:
+    elif effModifier < 1:
         eff = Eff.WEAK
-    elif ChangedMultMultiplier > 1:
+    elif effModifier > 1:
         eff = Eff.SUPER
     else:
         eff = Eff.NORMAL
@@ -138,7 +132,7 @@ def calcMove(move, pkmn, opp, env):
     
     power = ovwr.power if ovwr.power != None else (move.power, move.power)
     
-    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * StabModifier * ChangedMultMultiplier * TypeModifier
+    calcSetup = lambda P: (((2 * pkmn.level + 10) / 250) * valueAtkDef * P + 2) * stabModifier * effModifier * typeModifier
     predamage = tuple(calcSetup(P) for P in power)
     
     # BRN attack nerf

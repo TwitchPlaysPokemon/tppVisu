@@ -10,7 +10,7 @@ from tppVisu.util import Stages, TypeSet, Effs, enum
 from tppVisu.tables import abilityFuncs
 
 
-Gender = enum(male=0, female=1, none=2)
+Gender = enum(male='m', female='f', none='-')
 #class Gender(IntEnum):
 #    male = 0
 #    female = 1

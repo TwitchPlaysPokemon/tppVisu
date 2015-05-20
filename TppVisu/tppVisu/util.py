@@ -13,11 +13,6 @@ def enum(**enums):
     return type('Enum', (), enums)
 
 Eff = enum(NOT='not', WEAK='weak', NORMAL='normal', SUPER='super')
-#class Eff(Enum):
-#    NOT    = 'not'
-#    WEAK   = 'weak'
-#    NORMAL = 'normal'
-#    SUPER  = 'super'
 
 class Effs(object):
     def __init__(self, SUPER, NORMAL, WEAK, NOT):

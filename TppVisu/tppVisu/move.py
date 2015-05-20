@@ -12,7 +12,7 @@ from tppVisu.tables.moveAnomalies import getAnomaly
 from tppVisu.util import enum
 
 
-MoveCategory = enum(physical=1, special=2, nonDamaging=3)
+MoveCategory = enum(physical='physical', special='special', nonDamaging='nonDamaging')
 #class MoveCategory(Enum):
 #    physical = 1
 #    special = 2
@@ -41,7 +41,7 @@ class Move(object):
         self.power = -1
         
     def isDisabled(self):
-        return self.power < 0
+        return self.power != None and self.power < 0
      
     def isPunchingMove(self):
         return self.name in ['Bullet Punch',

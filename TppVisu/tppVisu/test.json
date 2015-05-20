@@ -1,0 +1,1077 @@
+{
+    "blue": [
+        {
+            "stats": {
+                "hp": 265, 
+                "atk": 181, 
+                "spa": 107, 
+                "spd": 180, 
+                "spe": 176, 
+                "def": 150
+            }, 
+            "ability": "Adaptability", 
+            "ability_description": "DUMMY", 
+            "gender": "m", 
+            "name": "Eevee", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Headbutt", 
+                    "power": 70, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                102, 
+                                120
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                140, 
+                                165
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                109, 
+                                129
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Iron Tail", 
+                    "power": 100, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                36, 
+                                42
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 75
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                99, 
+                                117
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 75
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                38, 
+                                45
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 75
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "steel", 
+                    "accuracy": 75
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 25, 
+                    "name": "Bite", 
+                    "power": 60, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                44, 
+                                52
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                60, 
+                                71
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                47, 
+                                55
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "dark", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 15, 
+                    "name": "Sand Attack", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "ground", 
+                    "accuracy": 100
+                }
+            ], 
+            "type1": "normal", 
+            "id": 133, 
+            "type2": null
+        }, 
+        {
+            "stats": {
+                "hp": 221, 
+                "atk": 196, 
+                "spa": 86, 
+                "spd": 96, 
+                "spe": 159, 
+                "def": 136
+            }, 
+            "ability": "Chlorophyll", 
+            "ability_description": "DUMMY", 
+            "gender": "m", 
+            "name": "Seedot", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Seed Bomb", 
+                    "power": 80, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                379, 
+                                446
+                            ], 
+                            "eff": "super", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                129, 
+                                152
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                202, 
+                                238
+                            ], 
+                            "eff": "super", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "grass", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 5, 
+                    "name": "Sunny Day", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "fire", 
+                    "accuracy": null
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 30, 
+                    "name": "Swords Dance", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 159, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": null
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 5, 
+                    "name": "Explosion", 
+                    "power": 250, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                386, 
+                                454
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                531, 
+                                625
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 159, 
+                            "damage": [
+                                413, 
+                                486
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": "selfdestructing", 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }
+            ], 
+            "type1": "grass", 
+            "id": 273, 
+            "type2": null
+        }, 
+        {
+            "stats": {
+                "hp": 242, 
+                "atk": 211, 
+                "spa": 135, 
+                "spd": 121, 
+                "spe": 133, 
+                "def": 181
+            }, 
+            "ability": "Shell Armor", 
+            "ability_description": "DUMMY", 
+            "gender": "m", 
+            "name": "Corphish", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "physical", 
+                    "pp": 10, 
+                    "name": "Crabhammer", 
+                    "power": 90, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                114, 
+                                134
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 85
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                156, 
+                                184
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 85
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                61, 
+                                71
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 85
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "water", 
+                    "accuracy": 85
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Brick Break", 
+                    "power": 75, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                63, 
+                                75
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                174, 
+                                205
+                            ], 
+                            "eff": "super", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 133, 
+                            "damage": [
+                                68, 
+                                80
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "fighting", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 5, 
+                    "name": "Guillotine", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "ohko", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }, 
+                        {
+                            "kind": "ohko", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }, 
+                        {
+                            "kind": "ohko", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 30
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 20, 
+                    "name": "Dragon Dance", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 133, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "dragon", 
+                    "accuracy": null
+                }
+            ], 
+            "type1": "water", 
+            "id": 341, 
+            "type2": null
+        }
+    ], 
+    "red": [
+        {
+            "stats": {
+                "hp": 287, 
+                "atk": 212, 
+                "spa": 178, 
+                "spd": 182, 
+                "spe": 127, 
+                "def": 182
+            }, 
+            "ability": "Torrent", 
+            "ability_description": "DUMMY", 
+            "gender": "f", 
+            "name": "Marshtomp", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "special", 
+                    "pp": 10, 
+                    "name": "Muddy Water", 
+                    "power": 95, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                103, 
+                                121
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 85
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                95, 
+                                112
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 85
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                76, 
+                                89
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 85
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "water", 
+                    "accuracy": 85
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 10, 
+                    "name": "Earthquake", 
+                    "power": 100, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                153, 
+                                181
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                84, 
+                                99
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                127, 
+                                150
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "ground", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Double-Edge", 
+                    "power": 120, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                122, 
+                                144
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                135, 
+                                159
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                102, 
+                                120
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": "recoiling", 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 15, 
+                    "name": "Double Team", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": null
+                }
+            ], 
+            "type1": "ground", 
+            "id": 259, 
+            "type2": "water"
+        }, 
+        {
+            "stats": {
+                "hp": 319, 
+                "atk": 188, 
+                "spa": 206, 
+                "spd": 132, 
+                "spe": 127, 
+                "def": 132
+            }, 
+            "ability": "Soundproof", 
+            "ability_description": "DUMMY", 
+            "gender": "m", 
+            "name": "Loudred", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "special", 
+                    "pp": 10, 
+                    "name": "Hyper Voice", 
+                    "power": 90, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                112, 
+                                132
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                209, 
+                                246
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                166, 
+                                196
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "special", 
+                    "pp": 30, 
+                    "name": "Extrasensory", 
+                    "power": 80, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                67, 
+                                78
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                124, 
+                                146
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                98, 
+                                116
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "psychic", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "special", 
+                    "pp": 10, 
+                    "name": "Ice Beam", 
+                    "power": 95, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                79, 
+                                93
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                294, 
+                                346
+                            ], 
+                            "eff": "super", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 127, 
+                            "damage": [
+                                58, 
+                                68
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "ice", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 20, 
+                    "name": "Roar", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 127, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": -6, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }
+            ], 
+            "type1": "normal", 
+            "id": 294, 
+            "type2": null
+        }, 
+        {
+            "stats": {
+                "hp": 245, 
+                "atk": 202, 
+                "spa": 108, 
+                "spd": 150, 
+                "spe": 176, 
+                "def": 170
+            }, 
+            "ability": "Swift Swim", 
+            "ability_description": "DUMMY", 
+            "gender": "f", 
+            "name": "Goldeen", 
+            "ability_visuable": false, 
+            "moves": [
+                {
+                    "category": "physical", 
+                    "pp": 15, 
+                    "name": "Waterfall", 
+                    "power": 80, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                117, 
+                                138
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                64, 
+                                76
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                49, 
+                                57
+                            ], 
+                            "eff": "weak", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "water", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 25, 
+                    "name": "Horn Attack", 
+                    "power": 65, 
+                    "attacks": [
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                64, 
+                                75
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                70, 
+                                83
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }, 
+                        {
+                            "kind": "normal", 
+                            "speed": 176, 
+                            "damage": [
+                                53, 
+                                62
+                            ], 
+                            "eff": "normal", 
+                            "accuracy": 100
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 100
+                }, 
+                {
+                    "category": "physical", 
+                    "pp": 5, 
+                    "name": "Horn Drill", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "ohko", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }, 
+                        {
+                            "kind": "ohko", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }, 
+                        {
+                            "kind": "ohko", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": 30
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "normal", 
+                    "accuracy": 30
+                }, 
+                {
+                    "category": "nonDamaging", 
+                    "pp": 5, 
+                    "name": "Rain Dance", 
+                    "power": null, 
+                    "attacks": [
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }, 
+                        {
+                            "kind": "status", 
+                            "speed": 176, 
+                            "damage": null, 
+                            "eff": "normal", 
+                            "accuracy": null
+                        }
+                    ], 
+                    "anomaly": null, 
+                    "description": "DUMMY", 
+                    "priority": 0, 
+                    "type": "water", 
+                    "accuracy": null
+                }
+            ], 
+            "type1": "water", 
+            "id": 118, 
+            "type2": null
+        }
+    ]
+}
