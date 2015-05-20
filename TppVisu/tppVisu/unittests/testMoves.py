@@ -188,22 +188,17 @@ class TppVisuMoveTests(VisuTestCase):
         p1 = self.genPkmn(stats=self.genStats(ATK=70), moves=[m])
         p2 = self.genPkmn(stats=self.genStats(DEF=80))
         e = self.genEnv()
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(50, 70, 80, 1.5))
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(50, 70, 80, 1.5)) # stab
         e.weather = 'sun'
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1))
-        #self.assertEqual(calcSetup(p1, p2, e).move.type, 'fire')
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5)) # sun boosts fire
         e.weather = 'rain'
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1))
-        #self.assertEqual(calcSetup(p1, p2, e).move.type, 'water')
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5)) # rain boosts water
         e.weather = 'hail'
         self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1))
-        #self.assertEqual(calcSetup(p1, p2, e).move.type, 'ice')
         e.weather = 'sandstorm'
         self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1))
-        #self.assertEqual(calcSetup(p1, p2, e).move.type, 'rock')
         e.weather = 'fog'
         self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5))
-        #self.assertEqual(calcSetup(p1, p2, e).move.type, 'normal')
     
 
 if __name__ == '__main__':

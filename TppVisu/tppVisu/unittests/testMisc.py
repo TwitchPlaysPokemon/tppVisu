@@ -9,6 +9,7 @@ import unittest
 
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.unittests.visuUnittest import VisuTestCase
+from tppVisu.calculator import calcSetup
 
 
 class TppVisuMiscTests(VisuTestCase):
@@ -128,6 +129,28 @@ class TppVisuMiscTests(VisuTestCase):
         self.assertEqual(getEff('grass', 'steel'), 0.5)
         self.assertEqual(getEff('ghost', 'normal'), 0)
         self.assertEqual(getEff('water', 'flying'), 1)
+        
+    def test_weather(self):
+        p = self.genPkmn(stats=self.genStats(ATK=102))
+        p2 = self.genPkmn(stats=self.genStats(DEF=112))
+        mf = self.genMove(type='fire', power=98)
+        mw = self.genMove(type='water', power=96) # no STAB
+        env = self.genEnv()
+        p.moves = [mf, mw]
+        
+        s = calcSetup(p, p2, env)
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1)) # default
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1)) # default
+        
+        env.weather = 'sun'
+        s = calcSetup(p, p2, env)
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1.5)) # boost
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 0.5)) # nerf
+        
+        env.weather = 'rain'
+        s = calcSetup(p, p2, env)
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 0.5)) # nerf
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1.5)) # boost
     
 
 if __name__ == '__main__':

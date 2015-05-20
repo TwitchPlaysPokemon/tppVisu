@@ -46,6 +46,18 @@ def calcSetup(blue, red, env):
     abilityFuncs.call(blue.ability, blue, red, env)
     abilityFuncs.call(red.ability, red, blue, env)
     
+    #weather effects
+    for mon in [blue, red]:
+        if env.weather == "sun":
+            mon.typeMults.fire *= 1.5
+            mon.typeMults.water /= 2
+        if env.weather == "rain":
+            mon.typeMults.fire /= 2
+            mon.typeMults.water *= 1.5
+        if env.weather == "sandstorm":
+            if "rock" in [mon.type1,mon.type2]:
+                mon.SPD *= 1.5
+                
     blues = [calcMove(move, blue, red, env) for move in blue.moves]
     reds  = [calcMove(move, red, blue, env) for move in red.moves]
     
@@ -60,17 +72,6 @@ def calcMove(move, pkmn, opp, env):
     if not move.visuable:
         return MoveResult(env, move.accuracy, pkmn.SPE.get(), kind=Kind.notVisuable)
     
-    #weather effects
-    for mon in [pkmn,opp]:
-        if env.weather == "sun":
-            mon.typeMults.fire *= 2
-            mon.typeMults.water /= 2
-        if env.weather == "rain":
-            mon.typeMults.fire /= 2
-            mon.typeMults.water *= 2
-        if env.weather == "sandstorm":
-            if "rock" in [mon.type1,mon.type2]:
-                mon.SPD *= 1.5
     if env.weather == "fog":
         if move.accuracy != None: move.accuracy *= 6.0/10
         #Hail doesn't change any stats or anything
