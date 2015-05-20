@@ -3,12 +3,17 @@ Created on 13.05.2015
 
 @author: Felk
 '''
+
+
+
 from __future__ import division
 
 import unittest
-from tppVisu.pokemon import Pokemon, Gender
+
 from tppVisu.move import Move, MoveCategory
+from tppVisu.pokemon import Pokemon, Gender
 from tppVisu.util import Stats, Environment, Eff
+
 
 class VisuTestCase(unittest.TestCase):
     
@@ -30,8 +35,8 @@ class VisuTestCase(unittest.TestCase):
                        gender, ability)
         
     def getDamage(self, power, ATK, DEF, mult=1):
-        dmg = ((210/250) * (ATK/DEF) * power + 2) * mult
-        return (int(dmg*0.85), int(dmg))
+        dmg = ((210 / 250) * (ATK / DEF) * power + 2) * mult
+        return (int(dmg * 0.85), int(dmg))
      
     def genEnv(self, weather='none'):
         return Environment(weather)

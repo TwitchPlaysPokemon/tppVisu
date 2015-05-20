@@ -7,8 +7,8 @@ This module is needed to infer move-notice-strings for moves with notable anomal
 '''
 from __future__ import division
 
-#from enum import Enum
 from tppVisu.util import enum
+
 
 # also crash damage moves
 recoiling = ['Take Down',
@@ -33,7 +33,7 @@ leeching = ['Drain Punch',
             'Giga Drain',
             'Mega Drain']
 
-selfdestructing = ['Explosion', 'Self-Destruct','Selfdestruct']
+selfdestructing = ['Explosion', 'Self-Destruct', 'Selfdestruct']
 
 lasting_two_turns = ['Fly',
                      'Giga Impact',
@@ -77,25 +77,15 @@ others = ['Dream Eater',
           'Last Resort',
           'U-Turn']
 
-MoveAnomaly = enum(recoiling          = 'recoiling',
-                   leeching           = 'leeching',
-                   selfdestructing    = 'selfdestructing',
-                   lasting_two_turns  = 'lasting 2 turns',
-                   power_doubling     = 'lower damage displayed',
-                   health_dependend   = 'full health assumed.',
-                   special_powerrange = 'full power range displayed',
-                   round_dependend    = 'first round displayed',
-                   other              = '')
-#class MoveAnomaly(Enum):
-#    recoiling          = 'recoiling'
-#    leeching           = 'leeching'
-#    selfdestructing    = 'selfdestructing'
-#    lasting_two_turns  = 'lasting 2 turns'
-#    power_doubling     = 'lower damage displayed'
-#    health_dependend   = 'full health assumed.'
-#    special_powerrange = 'full power range displayed'
-#    round_dependend    = 'first round displayed'
-#    other              = ''
+MoveAnomaly = enum(recoiling='recoiling',
+                   leeching='leeching',
+                   selfdestructing='selfdestructing',
+                   lasting_two_turns='lasting 2 turns',
+                   power_doubling='lower damage displayed',
+                   health_dependend='full health assumed.',
+                   special_powerrange='full power range displayed',
+                   round_dependend='first round displayed',
+                   other='')
     
 def getAnomaly(move):
     if   move.name in recoiling:          return MoveAnomaly.recoiling

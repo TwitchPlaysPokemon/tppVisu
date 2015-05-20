@@ -13,7 +13,7 @@
             "ability_description": "DUMMY", 
             "gender": "m", 
             "name": "Eevee", 
-            "ability_visuable": false, 
+            "ability_visuable": false,
             "moves": [
                 {
                     "category": "physical", 

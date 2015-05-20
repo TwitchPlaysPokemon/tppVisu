@@ -15,7 +15,7 @@ from tppVisu.unittests.visuUnittest import VisuTestCase
 class TppVisuMoveTests(VisuTestCase):
     
     def test_move_arm_thrust(self):
-        p1 = self.genPkmn(stats=self.genStats(ATK=332), type1="dragon", moves=[self.genMove(name='Arm Thrust', power=15)]) # no stab
+        p1 = self.genPkmn(stats=self.genStats(ATK=332), type1="dragon", moves=[self.genMove(name='Arm Thrust', power=15)])  # no stab
         p2 = self.genPkmn(stats=self.genStats(DEF=223))
         dmg1 = self.getDamage(15, 332, 223)[0] * 2
         dmg2 = self.getDamage(15, 332, 223)[1] * 5
@@ -40,13 +40,13 @@ class TppVisuMoveTests(VisuTestCase):
 
     def test_move_explosion(self):
         m = self.genMove(name='Explosion', power=250, type='normal')
-        p1 = self.genPkmn(stats=self.genStats(ATK=123), type1='normal', moves=[m]) # stab
+        p1 = self.genPkmn(stats=self.genStats(ATK=123), type1='normal', moves=[m])  # stab
         p2 = self.genPkmn(stats=self.genStats(DEF=321), type1='normal')
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage(500, 123, 321, 1.5))
 
     def test_move_facade(self):
         m = self.genMove(name='Facade', power=70, type='normal')
-        p1 = self.genPkmn(stats=self.genStats(ATK=121), type1='fire', moves=[m]) # no stab
+        p1 = self.genPkmn(stats=self.genStats(ATK=121), type1='fire', moves=[m])  # no stab
         p2 = self.genPkmn(stats=self.genStats(DEF=212), type1='normal')
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage(70, 121, 212))
         p1.status = 'par'
@@ -60,14 +60,14 @@ class TppVisuMoveTests(VisuTestCase):
         self.assertNotEqual(calcSetup(self.genPkmn(moves=[self.genMove(name='Seismic Toss')]), self.genPkmn(), self.genEnv()).blues[0].kind, Kind.ohko)
 
     def test_move_frustration(self):
-        m = self.genMove(name='Frustration', power=42) # power should be ignored
+        m = self.genMove(name='Frustration', power=42)  # power should be ignored
         p1 = self.genPkmn(stats=self.genStats(ATK=79), type1='water', moves=[m])
         p2 = self.genPkmn(stats=self.genStats(DEF=163))
         p1.happiness = 68
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage((255 - 68) / 2.5, 79, 163))
 
     def test_move_return(self):
-        m = self.genMove(name='Return', power=14) # power should be ignored
+        m = self.genMove(name='Return', power=14)  # power should be ignored
         p1 = self.genPkmn(stats=self.genStats(ATK=133), type1='water', moves=[m])
         p2 = self.genPkmn(stats=self.genStats(DEF=201))
         p1.happiness = 82
@@ -124,7 +124,7 @@ class TppVisuMoveTests(VisuTestCase):
         m = self.genMove(name='Night Shade')
         p1 = self.genPkmn(moves=[m])
         self.assertEqual(calcSetup(p1, self.genPkmn(), self.genEnv()).blues[0].damage, (100, 100))
-        p1.level=57
+        p1.level = 57
         self.assertEqual(calcSetup(p1, self.genPkmn(), self.genEnv()).blues[0].damage, (57, 57))
     
     def test_move_seismic_toss(self):
@@ -132,7 +132,7 @@ class TppVisuMoveTests(VisuTestCase):
         p1 = self.genPkmn(moves=[m])
         p2 = self.genPkmn()
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, (100, 100))
-        p2.level=39
+        p2.level = 39
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, (39, 39))
 
     def test_move_psywave(self):
@@ -159,7 +159,7 @@ class TppVisuMoveTests(VisuTestCase):
         p1 = self.genPkmn(stats=self.genStats(ATK=154), type1='dark', moves=[m])
         p2 = self.genPkmn(stats=self.genStats(DEF=235))
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage(60, 154, 235))
-        p2.status='par'
+        p2.status = 'par'
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage(120, 154, 235))
 
     def test_move_sonic_boom(self):
@@ -188,11 +188,11 @@ class TppVisuMoveTests(VisuTestCase):
         p1 = self.genPkmn(stats=self.genStats(ATK=70), moves=[m])
         p2 = self.genPkmn(stats=self.genStats(DEF=80))
         e = self.genEnv()
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(50, 70, 80, 1.5)) # stab
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(50, 70, 80, 1.5))  # stab
         e.weather = 'sun'
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5)) # sun boosts fire
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5))  # sun boosts fire
         e.weather = 'rain'
-        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5)) # rain boosts water
+        self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1.5))  # rain boosts water
         e.weather = 'hail'
         self.assertEqual(calcSetup(p1, p2, e).blues[0].damage, self.getDamage(100, 70, 80, 1))
         e.weather = 'sandstorm'

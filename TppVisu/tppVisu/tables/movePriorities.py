@@ -5,6 +5,7 @@ Created on 29.04.2015
 '''
 from __future__ import division
 
+
 tableMovePriorities = {
     'Helping Hand' :  5,
     'Magic Coat'   :  4,

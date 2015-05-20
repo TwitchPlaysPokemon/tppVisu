@@ -7,6 +7,7 @@ from __future__ import division
 
 from tppVisu.pokemon import Gender
 
+
 class MoveOverwrites(object):
     def __init__(self):
         self.damage = None

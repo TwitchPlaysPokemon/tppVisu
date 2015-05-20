@@ -3,13 +3,14 @@ Created on 28.04.2015
 
 @author: Felk
 '''
+
 from __future__ import division
 
 import unittest
 
+from tppVisu.calculator import calcSetup
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.unittests.visuUnittest import VisuTestCase
-from tppVisu.calculator import calcSetup
 
 
 class TppVisuMiscTests(VisuTestCase):
@@ -86,13 +87,13 @@ class TppVisuMiscTests(VisuTestCase):
     def test_stats6(self):
         p = self.genPkmn(stats=self.genStats(ATK=93))
         p.ATK.stageAdd(1)
-        self.assertEqual(p.ATK.get(), int(93*1.5))
+        self.assertEqual(p.ATK.get(), int(93 * 1.5))
         p.ATK *= 2
-        self.assertEqual(p.ATK.get(), int(93*1.5*2))
+        self.assertEqual(p.ATK.get(), int(93 * 1.5 * 2))
         p.ATK.stageAdd(2)
-        self.assertEqual(p.ATK.get(), int(93*2.5*2))
+        self.assertEqual(p.ATK.get(), int(93 * 2.5 * 2))
         p.ATK = p.ATK * 0.5
-        self.assertEqual(p.ATK.get(), int(93*2.5))
+        self.assertEqual(p.ATK.get(), int(93 * 2.5))
         
     def test_moveMinMaxHits(self):
         m1 = self.genMove(name='Double Slap')
@@ -134,23 +135,23 @@ class TppVisuMiscTests(VisuTestCase):
         p = self.genPkmn(stats=self.genStats(ATK=102))
         p2 = self.genPkmn(stats=self.genStats(DEF=112))
         mf = self.genMove(type='fire', power=98)
-        mw = self.genMove(type='water', power=96) # no STAB
+        mw = self.genMove(type='water', power=96)  # no STAB
         env = self.genEnv()
         p.moves = [mf, mw]
         
         s = calcSetup(p, p2, env)
-        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1)) # default
-        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1)) # default
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1))  # default
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1))  # default
         
         env.weather = 'sun'
         s = calcSetup(p, p2, env)
-        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1.5)) # boost
-        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 0.5)) # nerf
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 1.5))  # boost
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 0.5))  # nerf
         
         env.weather = 'rain'
         s = calcSetup(p, p2, env)
-        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 0.5)) # nerf
-        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1.5)) # boost
+        self.assertEqual(s.blues[0].damage, self.getDamage(98, 102, 112, 0.5))  # nerf
+        self.assertEqual(s.blues[1].damage, self.getDamage(96, 102, 112, 1.5))  # boost
     
 
 if __name__ == '__main__':

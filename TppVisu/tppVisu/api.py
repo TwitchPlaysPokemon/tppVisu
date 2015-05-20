@@ -9,10 +9,14 @@ NOTE: Data like the ability-visuable-flag, move-anomaly-notices or move-prioriti
       They are inferred at Pokemon/Move-object-creation and available in those objects. They are not returned by calcSetup() or calcMove().
       They could be included here somewhere, but currently just aren't. They might also only be important for the Web-Version of the visualizer.
 '''
+
+
+
+
 from __future__ import division
 
 from tppVisu.calculator import calcSetup
-import json
+
 
 def buildDictMatch(blues, reds, env):
     '''builds a dictionary from a whole match. Takes 2 pokemon arrays "blues" and "reds" plus an Environment (see util).
@@ -140,7 +144,7 @@ def buildDictOldApi(blues, reds, env):
             poke['type2'] = p.type2
             poke['gender'] = p.gender
             poke['ability'] = p.ability
-            poke['ability_description'] = 'DUMMY' # TODO
+            poke['ability_description'] = 'DUMMY'  # TODO
             poke['ability_visuable'] = p.abilityVisuable
             poke['stats'] = {}
             poke['stats']['hp'] = p.HP
@@ -153,7 +157,7 @@ def buildDictOldApi(blues, reds, env):
             for im, m in enumerate(p.moves):
                 move = {}
                 move['name'] = m.name
-                move['description'] = 'DUMMY' # TODO
+                move['description'] = 'DUMMY'  # TODO
                 move['type'] = m.type
                 move['pp'] = m.pp
                 move['power'] = m.power

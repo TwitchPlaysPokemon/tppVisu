@@ -5,6 +5,7 @@ Created on 28.04.2015
 '''
 from __future__ import division
 
+
 tableMoveHits = {
     'Arm Thrust'  : (2, 5),
     'Barrage'     : (2, 5),

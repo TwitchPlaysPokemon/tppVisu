@@ -5,11 +5,12 @@ Created on 01.05.2015
 '''
 from __future__ import division
 
+
 tableNotVisuables = ['Bide',
                      'Counter',
                      'Crush Grip',
                      'Endeavor',
-                     'Hidden Power', # (for fe1k.de db) there are separate moves for each hidden power type. Use those.
+                     'Hidden Power',  # (for fe1k.de db) there are separate moves for each hidden power type. Use those.
                      'Mirror Coat',
                      'Nature Power',
                      'Super Fang',

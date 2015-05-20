@@ -5,18 +5,14 @@ Created on 29.04.2015
 '''
 from __future__ import division
 
+from tppVisu.tables.moveAnomalies import getAnomaly
 from tppVisu.tables.moveHits import getMinMaxHits
 from tppVisu.tables.movePriorities import getPriority
 from tppVisu.tables.moveVisuables import isVisuable
-from tppVisu.tables.moveAnomalies import getAnomaly
 from tppVisu.util import enum
 
 
 MoveCategory = enum(physical='physical', special='special', nonDamaging='nonDamaging')
-#class MoveCategory(Enum):
-#    physical = 1
-#    special = 2
-#    nonDamaging = 3
 
 class Move(object): 
     '''class to represent a pokemon move, including all the needed data like type, category, power etc.'''
@@ -24,18 +20,18 @@ class Move(object):
         '''name, description and type are strings.
         categoryis an Enum, see above.
         power, pp and accuracy are numbers.'''
-        self.name        = name.title() # First letters uppercase. Dirty fix. TODO Might not work for U-turn
+        self.name = name.title()  # First letters uppercase. Dirty fix. TODO Might not work for U-turn
         self.description = description
-        self.type        = type
-        self.category    = category
-        self.power       = power
-        self.pp          = pp
-        self.accuracy    = accuracy
-        self.priority    = getPriority(self)
-        self.visuable    = isVisuable(self)
-        self.minMaxHits  = getMinMaxHits(self)
-        self.anomaly     = getAnomaly(self) # None, or a MoveAnomaly Enum, whose value is a message to be displayed.
-                                            # Can also be empty string for a regular "read description" notice.
+        self.type = type
+        self.category = category
+        self.power = power
+        self.pp = pp
+        self.accuracy = accuracy
+        self.priority = getPriority(self)
+        self.visuable = isVisuable(self)
+        self.minMaxHits = getMinMaxHits(self)
+        self.anomaly = getAnomaly(self)  # None, or a MoveAnomaly Enum, whose value is a message to be displayed.
+                                        # Can also be empty string for a regular "read description" notice.
        
     def disable(self):
         self.power = -1

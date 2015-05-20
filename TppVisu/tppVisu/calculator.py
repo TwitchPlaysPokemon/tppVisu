@@ -5,12 +5,14 @@ Created on 02.05.2015
 '''
 from __future__ import division
 
+from collections import namedtuple
+from copy import deepcopy
+
 from tppVisu.move import MoveCategory
 from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
 from tppVisu.util import Eff, enum
-from copy import deepcopy
-from collections import namedtuple
+
 
 Kind = enum(normal='normal', status='status', ohko='ohko', notVisuable='notVisuable')
 
@@ -23,7 +25,7 @@ class MoveResult(object):
             self.accuracy = int(accuracy)
         self.speed = int(speed)
         self.kind = kind
-        self.eff  = eff
+        self.eff = eff
         if damage == None:
             self.damage = None
         else:
@@ -35,13 +37,13 @@ def calcSetup(blue, red, env):
     
     # work on local copies
     blue = deepcopy(blue)
-    red  = deepcopy(red)
-    env  = deepcopy(env)
+    red = deepcopy(red)
+    env = deepcopy(env)
     
     abilityFuncs.call(blue.ability, blue, red, env)
     abilityFuncs.call(red.ability, red, blue, env)
     
-    #weather effects
+    # weather effects
     for mon in [blue, red]:
         if env.weather == "sun":
             mon.typeMults.fire *= 1.5
@@ -50,11 +52,11 @@ def calcSetup(blue, red, env):
             mon.typeMults.fire /= 2
             mon.typeMults.water *= 1.5
         if env.weather == "sandstorm":
-            if "rock" in [mon.type1,mon.type2]:
+            if "rock" in [mon.type1, mon.type2]:
                 mon.SPD *= 1.5
                 
     blues = [calcMove(move, blue, red, env) for move in blue.moves]
-    reds  = [calcMove(move, red, blue, env) for move in red.moves]
+    reds = [calcMove(move, red, blue, env) for move in red.moves]
     
     return SetupResult(blues, reds, env)
     
@@ -62,14 +64,14 @@ def calcSetup(blue, red, env):
 def calcMove(move, pkmn, opp, env):
     
     ovwr = moveFuncs.call(move, pkmn, opp, env)
-    #moveNotice = ovwr.notice
+    # moveNotice = ovwr.notice
     
     if not move.visuable:
         return MoveResult(env, move.accuracy, pkmn.SPE.get(), kind=Kind.notVisuable)
     
     if env.weather == "fog":
-        if move.accuracy != None: move.accuracy *= 6.0/10
-        #Hail doesn't change any stats or anything
+        if move.accuracy != None: move.accuracy *= 6.0 / 10
+        # Hail doesn't change any stats or anything
     
     # calculate final accuracy
     accu = None
@@ -112,9 +114,9 @@ def calcMove(move, pkmn, opp, env):
     if effModifier == 0:
         effModifier = pkmn.effs.NOT
     elif effModifier < 1:
-        effModifier *= pkmn.effs.WEAK * 2 # scale default (0.5) to 1 to act as multiplier in
+        effModifier *= pkmn.effs.WEAK * 2  # scale default (0.5) to 1 to act as multiplier in
     elif effModifier > 1:
-        effModifier *= pkmn.effs.SUPER * 0.5 # scale default (2) to 1 to act as multiplier
+        effModifier *= pkmn.effs.SUPER * 0.5  # scale default (2) to 1 to act as multiplier
     else:
         effModifier *= pkmn.effs.NORMAL
       
@@ -139,7 +141,7 @@ def calcMove(move, pkmn, opp, env):
     if pkmn.status == 'brn' and move.category == MoveCategory.physical:
         predamage = tuple(D * pkmn.brnMult for D in predamage)
         
-    damage = ovwr.damage if ovwr.damage != None else (int(predamage[0] * 0.85)* move.minMaxHits[0], int(predamage[1]) * move.minMaxHits[1])
+    damage = ovwr.damage if ovwr.damage != None else (int(predamage[0] * 0.85) * move.minMaxHits[0], int(predamage[1]) * move.minMaxHits[1])
     damage = tuple(max(0, D) for D in damage)
 
     return MoveResult(env, accu, pkmn.SPE.get(), eff=eff, damage=damage)

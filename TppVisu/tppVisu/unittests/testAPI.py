@@ -5,13 +5,13 @@ Created on 28.04.2015
 '''
 from __future__ import division
 
+import json
 import unittest
 
-from tppVisu.move import MoveCategory
 from tppVisu.api import buildDictSetup, buildDictOldApi
-import json
-from tppVisu.unittests.visuUnittest import VisuTestCase
+from tppVisu.move import MoveCategory
 from tppVisu.pokemon import Gender
+from tppVisu.unittests.visuUnittest import VisuTestCase
 
 
 class TppVisuApiTests(VisuTestCase):
@@ -28,7 +28,7 @@ class TppVisuApiTests(VisuTestCase):
         blues = []
         reds = []
         limit = len(data['blue'])
-        for i, p in enumerate(data['blue']+data['red']):
+        for i, p in enumerate(data['blue'] + data['red']):
             pkmn = {}
             t2 = p['type2'] if p['type2'] != '-' else None
             gender = Gender.none
@@ -44,7 +44,7 @@ class TppVisuApiTests(VisuTestCase):
                 elif m['category'] == 'ohko': category = MoveCategory.physical
                 accuracy = m['accuracy'] if m['accuracy'] > 0 else None
                 pkmn.moves.append(self.genMove(name=m['name'], type=m['type'], pp=m['pp'], power=m.get('power', None), accuracy=accuracy, category=category))
-            (blues if i<limit else reds).append(pkmn)
+            (blues if i < limit else reds).append(pkmn)
             
         json.dump(buildDictOldApi(blues, reds, self.genEnv(weather='none')), open('../test.json', 'w+'), indent=4)
             

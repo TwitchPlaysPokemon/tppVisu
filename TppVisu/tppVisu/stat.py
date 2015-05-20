@@ -5,6 +5,7 @@ Created on 29.04.2015
 '''
 from __future__ import division
 
+
 class Stat(object):
     '''class for pokemon stats.
     includes the base power, stages, and can calculate the final value.'''
@@ -12,8 +13,8 @@ class Stat(object):
         self.base = base
         self.stage = stage
         self.multiplier = 1
-        self.increment = 1 # for abilities 'Contrary', 'Simple' and 'Unaware'
-        self.multTable = [2/8, 2/7, 2/6, 2/5, 2/4, 2/3, 2/2, 3/2, 4/2, 5/2, 6/2, 7/2, 8/2]
+        self.increment = 1  # for abilities 'Contrary', 'Simple' and 'Unaware'
+        self.multTable = [2 / 8, 2 / 7, 2 / 6, 2 / 5, 2 / 4, 2 / 3, 2 / 2, 3 / 2, 4 / 2, 5 / 2, 6 / 2, 7 / 2, 8 / 2]
         
     def setStage(self, stage):
         self.stage = min(6, max(-6, stage))
@@ -34,7 +35,7 @@ class StatAccEva(Stat):
     Don't use Stat for Accuracy and Evasion. Also don't use StatAccEva for atk, def, spa, spd or spe.'''
     def __init__(self, stage=0):
         super(StatAccEva, self).__init__(1, stage)
-        self.multTable = [33/100, 36/100, 43/100, 50/100, 60/100, 75/100, 100/100, 133/100, 166/100, 200/100, 250/100, 266/100, 300/100]
+        self.multTable = [33 / 100, 36 / 100, 43 / 100, 50 / 100, 60 / 100, 75 / 100, 100 / 100, 133 / 100, 166 / 100, 200 / 100, 250 / 100, 266 / 100, 300 / 100]
     
     def get(self):
         # overwritten, because accuracy modifiers must not be cast to an integer
