@@ -154,9 +154,13 @@ def m_self_destruct (move, pkmn, opp, env, ovwr):
 def m_smelling_salts(move, pkmn, opp, env, ovwr):
     if opp.status == 'par':
         move.power *= 2
-def m_solarbeam(move, pkmn, opp, env, ovwr):
+        
+def m_solar_beam(move, pkmn, opp, env, ovwr):
     if env.weather in ["rain","sandstorm","hail"]:
         move.power /= 2
+        
+def m_solarbeam(move, pkmn, opp, env, ovwr): #Support gen4 spelling
+    return m_solar_beam(move, pkmn, opp, env, ovwr)
         
 def m_sonic_boom    (move, pkmn, opp, env, ovwr):
     ovwr.damage = (20, 20)

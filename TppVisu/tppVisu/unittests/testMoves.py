@@ -162,6 +162,18 @@ class TppVisuMoveTests(VisuTestCase):
         p2.status = 'par'
         self.assertEqual(calcSetup(p1, p2, self.genEnv()).blues[0].damage, self.getDamage(120, 154, 235))
 
+    def test_move_solar_beam(self):
+        p1 = self.genPkmn(type1="dragon",moves=[self.genMove(name="SolarBeam",power=70),self.genMove(name="Solar Beam",power=70)])
+        pdamages = calcSetup(p1,self.genPkmn(),self.genEnv()).blues
+        
+        for result in pdamages:
+            self.assertEqual(result.damage, self.getDamage(70,100,100))
+          
+        pdamages = calcSetup(p1,self.genPkmn(),self.genEnv(weather='rain')).blues
+        
+        for result in pdamages:
+            self.assertEqual(result.damage, self.getDamage(70*0.5,100,100))
+
     def test_move_sonic_boom(self):
         self.assertEqual(calcSetup(self.genPkmn(moves=[self.genMove(name='Sonic Boom')]), self.genPkmn(), self.genEnv()).blues[0].damage, (20, 20))
 
