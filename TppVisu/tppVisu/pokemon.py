@@ -53,16 +53,16 @@ class Pokemon(object):
         
         
     def breaksMold(self):
-        return self.ability in ['Mold Breaker', 'Teravolt', 'Turboblaze']
+        return self.ability in ('Mold Breaker', 'Teravolt', 'Turboblaze')
     
     def isUntraceable(self):
-        return self.ability in ['Multitype', 'Illusion', 'Flower Gift', 'Imposter', 'Stance Change', 'Trace']
+        return self.ability in ('Multitype', 'Illusion', 'Flower Gift', 'Imposter', 'Stance Change', 'Trace')
     
     def disablesWeather(self):
-        return self.ability in ['Cloud Nine', 'Air Lock']
+        return self.ability in ('Cloud Nine', 'Air Lock')
     
     def hasStatusCondition(self):
-        return self.status in ['brn', 'frz', 'par', 'psn', 'slp']
+        return self.status in ('brn', 'frz', 'par', 'psn', 'slp')
     
     def hasVolatileStatusCondition(self):
         return self.statusVolatile != ''  # not so clean. should check as above

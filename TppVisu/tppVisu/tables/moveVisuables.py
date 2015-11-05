@@ -6,7 +6,7 @@ Created on 01.05.2015
 from __future__ import division, print_function
 
 
-tableNotVisuables = ['Bide',
+tableNotVisuables = {'Bide',
                      'Counter',
                      'Crush Grip',
                      'Endeavor',
@@ -19,7 +19,7 @@ tableNotVisuables = ['Bide',
                      'Beat Up',
                      'Metal Burst',
                      'Doom Desire'
-                    ]
+                    }
 
 def isVisuable(move):
     return move.name not in tableNotVisuables

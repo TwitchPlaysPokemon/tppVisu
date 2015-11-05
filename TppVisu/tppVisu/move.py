@@ -40,7 +40,7 @@ class Move(object):
         return self.power != None and self.power < 0
      
     def isPunchingMove(self):
-        return self.name in ['Bullet Punch',
+        return self.name in {'Bullet Punch',
                              'Comet Punch',
                              'Dizzy Punch',
                              'Drain Punch',
@@ -55,10 +55,10 @@ class Move(object):
                              'Power-Up Punch',
                              'Shadow Punch',
                              'Sky Uppercut',
-                             'Thunder Punch']
+                             'Thunder Punch'}
     
     def isSoundMove(self):
-        return self.name in ['Boomburst',
+        return self.name in {'Boomburst',
                              'Bug Buzz',
                              'Chatter',
                              'Confide',
@@ -81,31 +81,31 @@ class Move(object):
                              'Snarl',
                              'Snore',
                              'Supersonic',
-                             'Uproar' ]
+                             'Uproar'}
     
     def isOHKOMove(self):
-        return self.name in ['Fissure',
+        return self.name in ('Fissure',
                              'Guillotine',
                              'Horn Drill',
-                             'Sheer Cold']
+                             'Sheer Cold')
 
     def isSwitchMove(self):
-        return self.name in ['Roar',
+        return self.name in ('Roar',
                              'Whirlwind',
                              'Dragon Tail',
-                             'Circle Throw']
+                             'Circle Throw')
 
     def isSleepMove(self):
-        return self.name in ['Dark Void',
+        return self.name in ('Dark Void',
                              'Grass Whistle',
                              'Hypnosis',
                              'Lovely Kiss',
                              'Sing',
                              'Sleep Powder',
                              'Spore',
-                             'Yawn']
+                             'Yawn')
     def isRecoilMove(self):
-        return self.name in ['Brave Bird',
+        return self.name in {'Brave Bird',
                              'Double-Edge',
                              'Flare Blitz',
                              'Head Charge',
@@ -116,10 +116,10 @@ class Move(object):
                              'Take Down',
                              'Volt Tackle',
                              'Wood Hammer',
-                             'Wild Charge']
+                             'Wild Charge'}
         
     def isOppStatLowering(self):
-        return self.name in ['Metal Sound',
+        return self.name in {'Metal Sound',
                              'Captivate',
                              'Charm',
                              'Cotton Spore',
@@ -137,20 +137,21 @@ class Move(object):
                              'Tickle',
                              'Kinesis',
                              'Leer',
-                             'Memento']
+                             'Memento'}
         
     def isStatusConditionMove(self):
-        return self.name in ['Glare',
+        return self.name in ('Glare',
                              'Poison Gas',
                              'Poison Powder',
                              'Stun Spore',
                              'Thunder Wave',
                              'Toxic',
                              'Will-O-Wisp',
-                             'Yawn']
+                             'Yawn')
+        
     def isWeatherChangingMove(self):
-        return self.name in ['Sunny Day',
+        return self.name in ('Sunny Day',
                              'Rain Dance',
                              'Sandstorm',
-                             'Hail']
+                             'Hail')
 

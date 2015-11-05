@@ -11,7 +11,7 @@ from copy import deepcopy
 from tppVisu.move import MoveCategory
 from tppVisu.tables import moveFuncs, abilityFuncs
 from tppVisu.tables.typeEffs import getEff
-from tppVisu.util import Eff, enum
+from tppVisu.util import Eff, enum, Environment
 
 
 Kind = enum(normal='normal', status='status', ohko='ohko', notVisuable='notVisuable')
@@ -61,7 +61,7 @@ def calcSetup(blue, red, env):
     return SetupResult(blues, reds, env)
     
 
-def calcMove(move, pkmn, opp, env):
+def calcMove(move, pkmn, opp, env=Environment()):
     
     ovwr = moveFuncs.call(move, pkmn, opp, env)
     # moveNotice = ovwr.notice

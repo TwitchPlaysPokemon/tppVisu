@@ -11,7 +11,7 @@ from tppVisu.util import enum
 
 
 # also crash damage moves
-recoiling = ['Take Down',
+recoiling = {'Take Down',
              'Double-Edge',
              'Submission',
              'Volt Tackle',
@@ -25,17 +25,17 @@ recoiling = ['Take Down',
              'Shadow End',
              'Jump Kick',
              'High Jump Kick',
-             'Hi Jump Kick']
+             'Hi Jump Kick'}
 
-leeching = ['Drain Punch',
+leeching = ('Drain Punch',
             'Leech Life',
             'Absorb',
             'Giga Drain',
-            'Mega Drain']
+            'Mega Drain')
 
-selfdestructing = ['Explosion', 'Self-Destruct', 'Selfdestruct']
+selfdestructing = ('Explosion', 'Self-Destruct', 'Selfdestruct')
 
-lasting_two_turns = ['Fly',
+lasting_two_turns = {'Fly',
                      'Giga Impact',
                      'Rock Wrecker',
                      'Sky Attack',
@@ -47,35 +47,35 @@ lasting_two_turns = ['Fly',
                      'Solar Beam',
                      'Skull Bash',
                      'Shadow Force',
-                     'Razor Wind']
+                     'Razor Wind'}
 
-power_doubling = ['Assurance',
+power_doubling = ('Assurance',
                   'Avalanche',
                   'Payback',
-                  'Revenge']
+                  'Revenge')
 
-health_dependend = ['Eruption',
+health_dependend = ('Eruption',
                     'Brine',
-                    'Water Spout']
+                    'Water Spout')
 
-special_powerrange = ['Flail',
+special_powerrange = ('Flail',
                       'Reversal',
                       'Trump Card',
                       'Wring Out',
                       'Spit Up',
-                      'Crush Grip']
+                      'Crush Grip')
 
-round_dependend = ['Fury Cutter',
-                   'Rollout']
+round_dependend = ('Fury Cutter',
+                   'Rollout')
 
 # no special display message. Just force a highlight on this move.
-others = ['Dream Eater',
+others = ('Dream Eater',
           'Future Sight',
           'Present',
           'Wake-Up Slap',
           'Focus Punch',
           'Last Resort',
-          'U-Turn']
+          'U-Turn')
 
 MoveAnomaly = enum(recoiling='recoiling',
                    leeching='leeching',
